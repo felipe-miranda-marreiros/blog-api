@@ -1,4 +1,7 @@
-import { CreateUserResponse } from '@/Domain/Users/Models/User'
+import {
+  CreateUserParams,
+  CreateUserResponse
+} from '@/Domain/Users/Models/User'
 
 export interface isEmailOrUsernameInUseParams {
   email: string
@@ -6,6 +9,6 @@ export interface isEmailOrUsernameInUseParams {
 }
 
 export interface UserRepository {
-  createUserRespository(params: CreateUserResponse): Promise<CreateUserResponse>
+  createUserRespository(params: CreateUserParams): Promise<CreateUserResponse>
   isEmailOrUsernameInUse(params: isEmailOrUsernameInUseParams): Promise<boolean>
 }

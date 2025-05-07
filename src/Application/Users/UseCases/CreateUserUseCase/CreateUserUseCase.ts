@@ -17,9 +17,11 @@ export class CreateUserUseCase implements CreateUser {
       })
 
     if (isEmailOrUsernameInUse) {
-      throw new ConflictError('')
+      throw new ConflictError('User already exits with email or username')
     }
 
-    return Promise.reject()
+    const user = await this.userRepository.createUserRespository(params)
+
+    return user
   }
 }
