@@ -47,10 +47,9 @@ describe('CreateUser UseCase', () => {
   })
   it('Should create an User if params are valid', async () => {
     const { sut, userRepositoryStub } = createSut()
-    vi.spyOn(
-      userRepositoryStub,
-      'isEmailOrUsernameInUse'
-    ).mockResolvedValueOnce(false)
+    jest
+      .spyOn(userRepositoryStub, 'isEmailOrUsernameInUse')
+      .mockResolvedValueOnce(false)
     const response = await sut.createUser(createUserParamsMock)
     expect(response).toEqual(response)
   })
