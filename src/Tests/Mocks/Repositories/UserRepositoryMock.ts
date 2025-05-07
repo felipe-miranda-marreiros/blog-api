@@ -2,12 +2,15 @@ import {
   isEmailOrUsernameInUseParams,
   UserRepository
 } from '@/Application/Contracts/Repositories/UserRepository'
-import { CreateUserResponse } from '@/Domain/Users/Models/User'
+import {
+  CreateUserParams,
+  CreateUserResponse
+} from '@/Domain/Users/Models/User'
 
 export function createUserRepositoryStub(): UserRepository {
   class UserRepositoryStub implements UserRepository {
     createUserRespository(
-      params: CreateUserResponse
+      params: CreateUserParams
     ): Promise<CreateUserResponse> {
       console.log(params)
       return Promise.resolve({

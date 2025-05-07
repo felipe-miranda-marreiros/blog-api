@@ -17,21 +17,23 @@ const createUserParamsMock: CreateUserParams = {
   username: 'any_username'
 }
 
+const createUserResponseMock: CreateUserResponse = {
+  created_at: 'any_date',
+  email_id: 1,
+  first_name: 'any_name',
+  id: 1,
+  last_name: 'any_name',
+  updated_at: 'any_date',
+  username_id: 1
+}
+
 function createUserRepositoryStub(): UserRepository {
   class UserRepositoryStub implements UserRepository {
     createUserRespository(
-      params: CreateUserResponse
+      params: CreateUserParams
     ): Promise<CreateUserResponse> {
       console.log(params)
-      return Promise.resolve({
-        created_at: 'any_date',
-        email_id: 1,
-        first_name: 'any_name',
-        id: 1,
-        last_name: 'any_name',
-        updated_at: 'any_date',
-        username_id: 1
-      })
+      return Promise.resolve(createUserResponseMock)
     }
     isEmailOrUsernameInUse(
       params: isEmailOrUsernameInUseParams
@@ -62,5 +64,14 @@ describe('CreateUser UseCase', () => {
     const { sut } = createSut()
     const promise = sut.createUser(createUserParamsMock)
     await expect(promise).rejects.toThrow(ConflictError)
+  })
+  it('Should create an User if params are valid', async () => {
+    const { sut, userRepositoryStub } = createSut()
+    vi.spyOn(
+      userRepositoryStub,
+      'isEmailOrUsernameInUse'
+    ).mockResolvedValueOnce(false)
+    const response = await sut.createUser(createUserParamsMock)
+    expect(response).toEqual(response)
   })
 })
