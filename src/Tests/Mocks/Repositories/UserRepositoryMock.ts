@@ -7,21 +7,15 @@ import {
   CreateUserResponse
 } from '@/Domain/Users/Models/User'
 
-export function createUserRepositoryStub(): UserRepository {
+export function createUserRepositoryStub(
+  response: CreateUserResponse
+): UserRepository {
   class UserRepositoryStub implements UserRepository {
     createUserRespository(
       params: CreateUserParams
     ): Promise<CreateUserResponse> {
       console.log(params)
-      return Promise.resolve({
-        created_at: 'any_date',
-        email_id: 1,
-        first_name: 'any_name',
-        id: 1,
-        last_name: 'any_name',
-        updated_at: 'any_date',
-        username_id: 1
-      })
+      return Promise.resolve(response)
     }
     isEmailOrUsernameInUse(
       params: isEmailOrUsernameInUseParams

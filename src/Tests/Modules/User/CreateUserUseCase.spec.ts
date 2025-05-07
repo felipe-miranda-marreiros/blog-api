@@ -1,13 +1,11 @@
-import {
-  isEmailOrUsernameInUseParams,
-  UserRepository
-} from '@/Application/Contracts/Repositories/UserRepository'
+import { UserRepository } from '@/Application/Contracts/Repositories/UserRepository'
 import { ConflictError } from '@/Application/Errors/ConflictError'
 import { CreateUserUseCase } from '@/Application/Users/UseCases/CreateUserUseCase/CreateUserUseCase'
 import {
   CreateUserParams,
   CreateUserResponse
 } from '@/Domain/Users/Models/User'
+import { createUserRepositoryStub } from '@/Tests/Mocks/Repositories/UserRepositoryMock'
 
 const createUserParamsMock: CreateUserParams = {
   email: 'any_email',
@@ -27,31 +25,13 @@ const createUserResponseMock: CreateUserResponse = {
   username_id: 1
 }
 
-function createUserRepositoryStub(): UserRepository {
-  class UserRepositoryStub implements UserRepository {
-    createUserRespository(
-      params: CreateUserParams
-    ): Promise<CreateUserResponse> {
-      console.log(params)
-      return Promise.resolve(createUserResponseMock)
-    }
-    isEmailOrUsernameInUse(
-      params: isEmailOrUsernameInUseParams
-    ): Promise<boolean> {
-      console.log(params)
-      return Promise.resolve(true)
-    }
-  }
-  return new UserRepositoryStub()
-}
-
 interface Sut {
   sut: CreateUserUseCase
   userRepositoryStub: UserRepository
 }
 
 function createSut(): Sut {
-  const userRepositoryStub = createUserRepositoryStub()
+  const userRepositoryStub = createUserRepositoryStub(createUserResponseMock)
   const sut = new CreateUserUseCase(userRepositoryStub)
   return {
     sut,
