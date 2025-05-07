@@ -1,5 +1,5 @@
-import { UserRepository } from '@/Domain/Application/Contracts/Repositories/UserRepository'
-import { ConflictError } from '@/Domain/Application/Errors/ConflictError'
+import { UserRepository } from '@/Application/Contracts/Repositories/UserRepository'
+import { ConflictError } from '@/Application/Errors/ConflictError'
 import {
   CreateUserParams,
   CreateUserResponse

@@ -2,12 +2,12 @@ import {
   isEmailOrUsernameInUseParams,
   UserRepository
 } from '@/Application/Contracts/Repositories/UserRepository'
+import { ConflictError } from '@/Application/Errors/ConflictError'
+import { CreateUserUseCase } from '@/Application/Users/UseCases/CreateUserUseCase/CreateUserUseCase'
 import {
   CreateUserParams,
   CreateUserResponse
 } from '@/Domain/Users/Models/User'
-import { CreateUserUseCase } from './CreateUserUseCase'
-import { ConflictError } from '@/Application/Errors/ConflictError'
 
 const createUserParamsMock: CreateUserParams = {
   email: 'any_email',
