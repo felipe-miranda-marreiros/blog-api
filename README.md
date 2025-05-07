@@ -91,19 +91,77 @@ Verifying user identity and access control in many parts of the system.
 - Caching:
 Storing frequently accessed data, used across different services or components.
 
-- Error Handling:
-Managing exceptions and failures in a consistent way.
+#### **Error Handling:**
+We need to pay attention to two things:
 
-- Validation:
-Checking data integrity or constraints in multiple places.
+1. Error Handling refers to how Express catches and processes errors that occur both synchronously and asynchronously. Express comes with a default error handler so you don’t need to write your own to get started.
+
+2. Starting with Express 5, route handlers and middleware that return a Promise will call next(value) automatically when they reject or throw an error. For example:
+
+```js
+app.get('/', (req, res) => {
+  throw new Error('BROKEN') // Express will catch this on its own.
+})
+```
+
+This project uses an abstract class that extends the Error class from JavaScript.
+
+Here's an example:
+
+```ts
+export abstract class CustomError extends Error {
+  abstract statusCode: number
+
+  constructor(message: string) {
+    super(message)
+  }
+
+  abstract serializeErrors(): ResponseError[]
+}
+```
+
+This way we can create NotFoundError class:
+
+```ts
+export class NotFoundError extends CustomError {
+  statusCode = 404
+
+  constructor(message: string) {
+    super(message)
+  }
+
+  serializeErrors() {
+    return [{ message: this.message }]
+  }
+}
+```
+
+The actual use:
+
+```ts
+export const getTicketByIdUseCase: GetTicketById = async (params) => {
+  const ticket = await getTicketByIdRepository(params.id)
+  if (!ticket) {
+    throw new NotFoundError(`Ticket with id: ${params.id} not found`)
+  }
+  return ticket
+}
+```
+
+#### **Validation:**
+Checking data integrity or constraints in multiple places. I decided to use Zod. We can use ZodInfer and ZodOutput interfaces to directly transform the input to domain model.
 
 - Monitoring & Telemetry:
 Collecting performance and health data across the application.
+//TODO
 
 - Security (e.g., input sanitization, encryption):
 Applied throughout the codebase.
 
-### Know Issues
+### Known Issues
 
 #1 DDD:
-- I'm not using the Rich Domain (Value Objects, Entities, AggregateRoots, Domain Events, Domain Services) on this project. Insted I decided to use Anemic Domain with emphasis on invariants only. I don't have much time to elaborate this kind of features in TypeScript. However, you can see the same project but in Java (Spring Boot) here (soon).
+- This project violates the Rich Domain approch (Value Objects, Entities, AggregateRoots, Domain Events, Domain Services) on this project. Insted I decided to use Anemic Domain with emphasis on invariants only. I don't have much time to elaborate this kind of features in TypeScript. However, you can see the same project but in Java (Spring Boot) here (soon).
+
+#2 Authentication and Authorization:
+- This project violates the generic subdomain rule. A generic subdomain is an area of the business that is important for operations but doesn't provide a competitive advantage. We shouldn't build authentication or authorization, but instead "buy, don't build". Alternatives like Keycloak and OAuth2 are battle tested and secure.
