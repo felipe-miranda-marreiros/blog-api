@@ -34,11 +34,17 @@ function createSut(): Sut {
 }
 
 describe('SignUp UseCase', () => {
-  it('Should not create an User if email or username is already in use', async () => {
+  it('Should not create an User if email already in use', async () => {
+    const { sut, userRepositoryStub } = createSut()
+    jest.spyOn(userRepositoryStub, 'isEmailInUse').mockResolvedValueOnce(true)
+    const promise = sut.signUp(signUpParamsMock)
+    await expect(promise).rejects.toThrow(ConflictError)
+  })
+  it('Should not create an User if username already in use', async () => {
     const { sut, userRepositoryStub } = createSut()
     jest
-      .spyOn(userRepositoryStub, 'isEmailOrUsernameInUse')
-      .mockRejectedValueOnce(new ConflictError('any_message'))
+      .spyOn(userRepositoryStub, 'isUsernameInUse')
+      .mockResolvedValueOnce(true)
     const promise = sut.signUp(signUpParamsMock)
     await expect(promise).rejects.toThrow(ConflictError)
   })
