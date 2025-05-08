@@ -1,7 +1,7 @@
 import { SignUpParams, SignUpResponse } from '@/Domain/Users/Models/User'
 import { SignUp } from '@/Domain/Users/UseCases/SignUp'
 import { Validation } from '@/Presentation/Contracts/Validation'
-import { CreateUserController } from '@/Presentation/Controllers/SignUpController/SignUpController'
+import { SignUpController } from '@/Presentation/Controllers/SignUpController/SignUpController'
 import {
   signUpParamsMock,
   signUpResponseMock
@@ -10,7 +10,7 @@ import {
 interface Sut {
   validationStub: Validation
   createUserUseCaseStub: SignUp
-  sut: CreateUserController
+  sut: SignUpController
 }
 
 function makeCreateUserUseCase(): SignUp {
@@ -34,7 +34,7 @@ function makeValidation(): Validation {
 function createSut(): Sut {
   const validationStub = makeValidation()
   const createUserUseCaseStub = makeCreateUserUseCase()
-  const sut = new CreateUserController(createUserUseCaseStub, validationStub)
+  const sut = new SignUpController(createUserUseCaseStub, validationStub)
   return {
     createUserUseCaseStub,
     validationStub,
@@ -46,8 +46,7 @@ describe('CreateUser Controller', () => {
   it('Should return 200 if User is created successfully', async () => {
     const { sut } = createSut()
     const response = await sut.handle({ body: signUpParamsMock })
-    expect(response.body?.first_name).toEqual(signUpResponseMock.first_name)
-    expect(response.body?.last_name).toEqual(signUpResponseMock.last_name)
+    expect(response.body?.access_token).toEqual(signUpResponseMock.access_token)
     expect(response.status_code).toBe(200)
   })
 })
