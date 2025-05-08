@@ -2,13 +2,15 @@ import {
   isEmailOrUsernameInUseParams,
   UserRepository
 } from '@/Application/Contracts/Repositories/UserRepository'
-import { SignUpParams, SignUpResponse } from '@/Domain/Users/Models/User'
+import { SignUpParams, User } from '@/Domain/Users/Models/User'
 import { db } from '../Drizzle/DrizzleClient'
 import { emails, usernames, users } from '../Schemas/Schemas'
 import { getISOFormatDateQuery } from '../Helpers/Helpers'
 
 export class UserSQLRepository implements UserRepository {
-  async createUserRespository(params: SignUpParams): Promise<SignUpResponse> {
+  async createUserRespository(
+    params: SignUpParams
+  ): Promise<Omit<User, 'password'>> {
     const result = await db.transaction(async (tx) => {
       const usernameTransaction = await tx
         .insert(usernames)
@@ -16,7 +18,7 @@ export class UserSQLRepository implements UserRepository {
         .returning({ username_id: usernames.id })
       const emailTransaction = await tx
         .insert(emails)
-        .values({ email: params.username })
+        .values({ email: params.email })
         .returning({ email_id: emails.id })
       return await tx
         .insert(users)
