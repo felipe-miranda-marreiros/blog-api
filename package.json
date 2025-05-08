@@ -5,12 +5,13 @@
   "main": "index.js",
   "scripts": {
     "prepare": "husky",
-    "start:dev": "tsx watch src/index.ts",
-    "start": "node build/server.js",
+    "start:dev": "tsx --env-file=.env.development --watch src/Main/index.ts",
+    "start": "node build/Main/index.js",
     "build": "tsup src --out-dir build",
     "docker:dev": "docker compose --env-file .env.development up -d",
     "test": "jest --passWithNoTests --noStackTrace --runInBand --detectOpenHandles",
-    "test:integration": "npm test -- -c jest.integration.config.ts"
+    "test:integration": "npm test -- -c jest.integration.config.ts",
+    "test:unit": "npm test -- --watch -c jest.unit.config.ts"
   },
   "repository": {
     "type": "git",
@@ -51,6 +52,7 @@
   "dependencies": {
     "dotenv": "^16.5.0",
     "drizzle-orm": "^0.43.1",
+    "express": "^5.1.0",
     "pg": "^8.15.6"
   }
 }

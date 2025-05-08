@@ -47,6 +47,6 @@ export class UserSQLRepository implements UserRepository {
   isEmailOrUsernameInUse(
     params: isEmailOrUsernameInUseParams
   ): Promise<boolean> {
-    throw new Error('Method not implemented.')
+    return Promise.resolve(false)
   }
 }
