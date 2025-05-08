@@ -1,16 +1,25 @@
-import {
-  isEmailOrUsernameInUseParams,
-  UserRepository
-} from '@/Application/Contracts/Repositories/UserRepository'
+import { UserRepository } from '@/Application/Contracts/Repositories/UserRepository'
 import { SignUpParams, User } from '@/Domain/Users/Models/User'
 import { db } from '../Drizzle/DrizzleClient'
 import { emails, usernames, users } from '../Schemas/Schemas'
 import { getISOFormatDateQuery } from '../Helpers/Helpers'
+import { eq } from 'drizzle-orm'
 
 export class UserSQLRepository implements UserRepository {
-  async createUserRespository(
-    params: SignUpParams
-  ): Promise<Omit<User, 'password'>> {
+  async isEmailInUse(email: string): Promise<boolean> {
+    const result = await db.select().from(emails).where(eq(emails.email, email))
+    return result.length > 0
+  }
+
+  async isUsernameInUse(username: string): Promise<boolean> {
+    const result = await db
+      .select()
+      .from(usernames)
+      .where(eq(usernames.username, username))
+    return result.length > 0
+  }
+
+  async createUser(params: SignUpParams): Promise<Omit<User, 'password'>> {
     const result = await db.transaction(async (tx) => {
       const usernameTransaction = await tx
         .insert(usernames)
@@ -40,10 +49,5 @@ export class UserSQLRepository implements UserRepository {
         })
     })
     return result[0]
-  }
-  isEmailOrUsernameInUse(
-    params: isEmailOrUsernameInUseParams
-  ): Promise<boolean> {
-    return Promise.resolve(false)
   }
 }

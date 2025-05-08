@@ -13,19 +13,25 @@ export class SignUpUseCase implements SignUp {
   ) {}
 
   async signUp(params: SignUpParams): Promise<SignUpResponse> {
-    const isEmailOrUsernameInUse =
-      await this.userRepository.isEmailOrUsernameInUse({
-        email: params.email,
-        username: params.username
-      })
+    const isEmailInUse = await this.userRepository.isEmailInUse(params.email)
+
+    if (isEmailInUse) {
+      throw new ConflictError(`An email already exits with ${params.email}`)
+    }
+
+    const isUsernameInUse = await this.userRepository.isUsernameInUse(
+      params.username
+    )
+
+    if (isUsernameInUse) {
+      throw new ConflictError(
+        `An username already exits with ${params.username}`
+      )
+    }
 
     const hashedPassword = await this.hasher.hash(params.password)
 
-    if (isEmailOrUsernameInUse) {
-      throw new ConflictError('User already exits with email or username')
-    }
-
-    const user = await this.userRepository.createUserRespository({
+    const user = await this.userRepository.createUser({
       ...params,
       password: hashedPassword
     })
