@@ -5,10 +5,11 @@ import { SignUpUseCase } from '@/Application/Modules/Users/UseCases/SignUpUseCas
 import { userRepository } from '../Dependencies/UserRepository'
 import { ZodAdapter } from '@/Main/Zod/ZodAdapter'
 import { z } from 'zod'
+import { BcryptAdapter } from '@/Infrastructure/Cryptography/BcryptAdapter'
 
 export const userRoutes = Router()
-
-const createUserUseCase = new SignUpUseCase(userRepository)
+const bcryptAdapter = new BcryptAdapter(12)
+const createUserUseCase = new SignUpUseCase(userRepository, bcryptAdapter)
 const createUserSchema = z.object({
   email: z.string().email().nonempty(),
   first_name: z.string().nonempty(),

@@ -9,14 +9,12 @@ export function createUserRepositoryStub(
 ): UserRepository {
   class UserRepositoryStub implements UserRepository {
     createUserRespository(params: SignUpParams): Promise<SignUpResponse> {
-      console.log(params)
       return Promise.resolve(response)
     }
     isEmailOrUsernameInUse(
       params: isEmailOrUsernameInUseParams
     ): Promise<boolean> {
-      console.log(params)
-      return Promise.resolve(true)
+      return Promise.resolve(false)
     }
   }
   return new UserRepositoryStub()
