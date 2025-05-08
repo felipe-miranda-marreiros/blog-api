@@ -1,3 +1,4 @@
+import { Encrypter } from '@/Application/Contracts/Criptography/Encrypter'
 import { Hasher } from '@/Application/Contracts/Criptography/Hasher'
 import { ConflictError } from '@/Application/Contracts/Errors/ConflictError'
 import { UserRepository } from '@/Application/Contracts/Repositories/UserRepository'
@@ -7,7 +8,8 @@ import { SignUp } from '@/Domain/Users/UseCases/SignUp'
 export class SignUpUseCase implements SignUp {
   constructor(
     private readonly userRepository: UserRepository,
-    private readonly encrypter: Hasher
+    private readonly hasher: Hasher,
+    private readonly encrypter: Encrypter
   ) {}
 
   async signUp(params: SignUpParams): Promise<SignUpResponse> {
@@ -17,20 +19,21 @@ export class SignUpUseCase implements SignUp {
         username: params.username
       })
 
-    const hashedPassword = await this.encrypter.hash(params.password)
+    const hashedPassword = await this.hasher.hash(params.password)
 
     if (isEmailOrUsernameInUse) {
       throw new ConflictError('User already exits with email or username')
     }
 
     const user = await this.userRepository.createUserRespository({
-      email: params.email,
-      first_name: params.first_name,
-      last_name: params.last_name,
-      password: hashedPassword,
-      username: params.username
+      ...params,
+      password: hashedPassword
     })
 
-    return user
+    const jwt = await this.encrypter.encrypt(user)
+
+    return {
+      access_token: jwt
+    }
   }
 }
