@@ -12,7 +12,8 @@
     "test": "jest --passWithNoTests --noStackTrace --runInBand --detectOpenHandles",
     "test:integration": "npm test -- -c jest.integration.config.ts",
     "test:unit": "npm test -- -c jest.unit.config.ts",
-    "test:staged": "npm test -- --findRelatedTests"
+    "test:staged": "npm test -- --findRelatedTests",
+    "test:ci": "npm test -- --coverage -c jest.unit.config.ts && npm test -- --coverage -c jest.integration.config.ts"
   },
   "repository": {
     "type": "git",
