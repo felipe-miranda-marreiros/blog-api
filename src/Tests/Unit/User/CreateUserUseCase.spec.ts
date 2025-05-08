@@ -2,28 +2,10 @@ import { UserRepository } from '@/Application/Contracts/Repositories/UserReposit
 import { ConflictError } from '@/Application/Errors/ConflictError'
 import { CreateUserUseCase } from '@/Application/Users/UseCases/CreateUserUseCase/CreateUserUseCase'
 import {
-  CreateUserParams,
-  CreateUserResponse
-} from '@/Domain/Users/Models/User'
+  createUserParamsMock,
+  createUserResponseMock
+} from '@/Tests/Mocks/Domain/User/UseCases'
 import { createUserRepositoryStub } from '@/Tests/Mocks/Repositories/UserRepositoryMock'
-
-const createUserParamsMock: CreateUserParams = {
-  email: 'any_email',
-  first_name: 'any_first_name',
-  last_name: 'any_last_name',
-  password: 'any_password',
-  username: 'any_username'
-}
-
-const createUserResponseMock: CreateUserResponse = {
-  created_at: 'any_date',
-  email_id: 1,
-  first_name: 'any_name',
-  id: 1,
-  last_name: 'any_name',
-  updated_at: 'any_date',
-  username_id: 1
-}
 
 interface Sut {
   sut: CreateUserUseCase
