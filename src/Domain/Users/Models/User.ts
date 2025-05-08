@@ -9,7 +9,7 @@ export interface User {
   updated_at: string
 }
 
-export type CreateUserParams = {
+export type SignUpParams = {
   username: string
   password: string
   first_name: string
@@ -17,4 +17,4 @@ export type CreateUserParams = {
   email: string
 }
 
-export type CreateUserResponse = Omit<User, 'password'>
+export type SignUpResponse = Omit<User, 'password'>

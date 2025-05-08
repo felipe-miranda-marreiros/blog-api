@@ -1,20 +1,20 @@
+import { ConflictError } from '@/Application/Contracts/Errors/ConflictError'
 import { UserRepository } from '@/Application/Contracts/Repositories/UserRepository'
-import { ConflictError } from '@/Application/Errors/ConflictError'
-import { CreateUserUseCase } from '@/Application/Users/UseCases/CreateUserUseCase/CreateUserUseCase'
+import { SignUpUseCase } from '@/Application/Modules/Users/UseCases/SignUpUseCase/SignUpUseCase'
 import {
-  createUserParamsMock,
-  createUserResponseMock
+  signUpParamsMock,
+  signUpResponseMock
 } from '@/Tests/Mocks/Domain/User/UseCases'
 import { createUserRepositoryStub } from '@/Tests/Mocks/Repositories/UserRepositoryMock'
 
 interface Sut {
-  sut: CreateUserUseCase
+  sut: SignUpUseCase
   userRepositoryStub: UserRepository
 }
 
 function createSut(): Sut {
-  const userRepositoryStub = createUserRepositoryStub(createUserResponseMock)
-  const sut = new CreateUserUseCase(userRepositoryStub)
+  const userRepositoryStub = createUserRepositoryStub(signUpResponseMock)
+  const sut = new SignUpUseCase(userRepositoryStub)
   return {
     sut,
     userRepositoryStub
@@ -24,7 +24,7 @@ function createSut(): Sut {
 describe('CreateUser UseCase', () => {
   it('Should not create an User if email or username is already in use', async () => {
     const { sut } = createSut()
-    const promise = sut.createUser(createUserParamsMock)
+    const promise = sut.signUp(signUpParamsMock)
     await expect(promise).rejects.toThrow(ConflictError)
   })
   it('Should create an User if params are valid', async () => {
@@ -32,7 +32,7 @@ describe('CreateUser UseCase', () => {
     jest
       .spyOn(userRepositoryStub, 'isEmailOrUsernameInUse')
       .mockResolvedValueOnce(false)
-    const response = await sut.createUser(createUserParamsMock)
+    const response = await sut.signUp(signUpParamsMock)
     expect(response).toEqual(response)
   })
 })

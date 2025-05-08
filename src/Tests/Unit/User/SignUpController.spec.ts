@@ -1,25 +1,22 @@
-import {
-  CreateUserParams,
-  CreateUserResponse
-} from '@/Domain/Users/Models/User'
-import { CreateUser } from '@/Domain/Users/UseCases/CreateUser'
+import { SignUpParams, SignUpResponse } from '@/Domain/Users/Models/User'
+import { SignUp } from '@/Domain/Users/UseCases/SignUp'
 import { Validation } from '@/Presentation/Contracts/Validation'
-import { CreateUserController } from '@/Presentation/Controllers/CreateUserController/CreateUserController'
+import { CreateUserController } from '@/Presentation/Controllers/SignUpController/SignUpController'
 import {
-  createUserParamsMock,
-  createUserResponseMock
+  signUpParamsMock,
+  signUpResponseMock
 } from '@/Tests/Mocks/Domain/User/UseCases'
 
 interface Sut {
   validationStub: Validation
-  createUserUseCaseStub: CreateUser
+  createUserUseCaseStub: SignUp
   sut: CreateUserController
 }
 
-function makeCreateUserUseCase(): CreateUser {
-  class CreateUserUseCaseStub implements CreateUser {
-    createUser(params: CreateUserParams): Promise<CreateUserResponse> {
-      return Promise.resolve(createUserResponseMock)
+function makeCreateUserUseCase(): SignUp {
+  class CreateUserUseCaseStub implements SignUp {
+    signUp(params: SignUpParams): Promise<SignUpResponse> {
+      return Promise.resolve(signUpResponseMock)
     }
   }
   return new CreateUserUseCaseStub()
@@ -48,9 +45,9 @@ function createSut(): Sut {
 describe('CreateUser Controller', () => {
   it('Should return 200 if User is created successfully', async () => {
     const { sut } = createSut()
-    const response = await sut.handle({ body: createUserParamsMock })
-    expect(response.body?.first_name).toEqual(createUserResponseMock.first_name)
-    expect(response.body?.last_name).toEqual(createUserResponseMock.last_name)
+    const response = await sut.handle({ body: signUpParamsMock })
+    expect(response.body?.first_name).toEqual(signUpResponseMock.first_name)
+    expect(response.body?.last_name).toEqual(signUpResponseMock.last_name)
     expect(response.status_code).toBe(200)
   })
 })

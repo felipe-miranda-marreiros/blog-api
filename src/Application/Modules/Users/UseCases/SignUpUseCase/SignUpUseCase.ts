@@ -1,15 +1,12 @@
+import { ConflictError } from '@/Application/Contracts/Errors/ConflictError'
 import { UserRepository } from '@/Application/Contracts/Repositories/UserRepository'
-import { ConflictError } from '@/Application/Errors/ConflictError'
-import {
-  CreateUserParams,
-  CreateUserResponse
-} from '@/Domain/Users/Models/User'
-import { CreateUser } from '@/Domain/Users/UseCases/CreateUser'
+import { SignUpParams, SignUpResponse } from '@/Domain/Users/Models/User'
+import { SignUp } from '@/Domain/Users/UseCases/SignUp'
 
-export class CreateUserUseCase implements CreateUser {
+export class SignUpUseCase implements SignUp {
   constructor(private readonly userRepository: UserRepository) {}
 
-  async createUser(params: CreateUserParams): Promise<CreateUserResponse> {
+  async signUp(params: SignUpParams): Promise<SignUpResponse> {
     const isEmailOrUsernameInUse =
       await this.userRepository.isEmailOrUsernameInUse({
         email: params.email,

@@ -1,5 +1,5 @@
 import express from 'express'
-import { userRoutes } from '../Routes/Users/UserRoutes/CreateUserRoute'
+import { userRoutes } from '../Routes/SignUp/SignUpRoute/SignUpRoute'
 import { errorHandlerMiddleware } from './ErrorHandlerMiddleware'
 
 export const app = express()

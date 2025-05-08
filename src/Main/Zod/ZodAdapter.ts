@@ -1,4 +1,4 @@
-import { BadRequestError } from '@/Application/Errors/BadRequestError'
+import { BadRequestError } from '@/Application/Contracts/Errors/BadRequestError'
 import { Validation } from '@/Presentation/Contracts/Validation'
 import { ZodSchema } from 'zod'
 

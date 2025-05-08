@@ -1,4 +1,4 @@
-import { ResponseError } from '../Contracts/Responses/ResponseError'
+import { ResponseError } from '../Responses/ResponseError'
 
 export abstract class CustomError extends Error {
   abstract statusCode: number

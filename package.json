@@ -11,7 +11,8 @@
     "docker:dev": "docker compose --env-file .env.development up -d",
     "test": "jest --passWithNoTests --noStackTrace --runInBand --detectOpenHandles",
     "test:integration": "npm test -- -c jest.integration.config.ts",
-    "test:unit": "npm test -- --watch -c jest.unit.config.ts"
+    "test:unit": "npm test -- -c jest.unit.config.ts",
+    "test:staged": "npm test -- --findRelatedTests"
   },
   "repository": {
     "type": "git",

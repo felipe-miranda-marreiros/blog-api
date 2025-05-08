@@ -1,9 +1,6 @@
-import {
-  CreateUserParams,
-  CreateUserResponse
-} from '@/Domain/Users/Models/User'
+import { SignUpParams, SignUpResponse } from '@/Domain/Users/Models/User'
 
-export const createUserParamsMock: CreateUserParams = {
+export const signUpParamsMock: SignUpParams = {
   email: 'any_email',
   first_name: 'any_first_name',
   last_name: 'any_last_name',
@@ -11,7 +8,7 @@ export const createUserParamsMock: CreateUserParams = {
   username: 'any_username'
 }
 
-export const createUserResponseMock: CreateUserResponse = {
+export const signUpResponseMock: SignUpResponse = {
   created_at: 'any_date',
   email_id: 1,
   first_name: 'any_name',

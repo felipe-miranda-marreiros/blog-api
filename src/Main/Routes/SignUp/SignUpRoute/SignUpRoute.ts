@@ -1,14 +1,14 @@
 import { Router } from 'express'
 import { expressControllerAdapter } from '../../../Express/ExpressControllerAdapter'
-import { CreateUserController } from '@/Presentation/Controllers/CreateUserController/CreateUserController'
-import { CreateUserUseCase } from '@/Application/Users/UseCases/CreateUserUseCase/CreateUserUseCase'
+import { CreateUserController } from '@/Presentation/Controllers/SignUpController/SignUpController'
+import { SignUpUseCase } from '@/Application/Modules/Users/UseCases/SignUpUseCase/SignUpUseCase'
 import { userRepository } from '../Dependencies/UserRepository'
 import { ZodAdapter } from '@/Main/Zod/ZodAdapter'
 import { z } from 'zod'
 
 export const userRoutes = Router()
 
-const createUserUseCase = new CreateUserUseCase(userRepository)
+const createUserUseCase = new SignUpUseCase(userRepository)
 const createUserSchema = z.object({
   email: z.string().email().nonempty(),
   first_name: z.string().nonempty(),

@@ -1,4 +1,4 @@
-import { CustomError } from '@/Application/Errors/CustomError'
+import { CustomError } from '@/Application/Contracts/Errors/CustomError'
 import { NextFunction, Request, Response } from 'express'
 
 export function errorHandlerMiddleware(
