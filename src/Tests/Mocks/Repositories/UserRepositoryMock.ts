@@ -2,13 +2,15 @@ import {
   isEmailOrUsernameInUseParams,
   UserRepository
 } from '@/Application/Contracts/Repositories/UserRepository'
-import { SignUpParams, SignUpResponse } from '@/Domain/Users/Models/User'
+import { SignUpParams, User } from '@/Domain/Users/Models/User'
 
 export function createUserRepositoryStub(
-  response: SignUpResponse
+  response: Omit<User, 'password'>
 ): UserRepository {
   class UserRepositoryStub implements UserRepository {
-    createUserRespository(params: SignUpParams): Promise<SignUpResponse> {
+    createUserRespository(
+      params: SignUpParams
+    ): Promise<Omit<User, 'password'>> {
       return Promise.resolve(response)
     }
     isEmailOrUsernameInUse(

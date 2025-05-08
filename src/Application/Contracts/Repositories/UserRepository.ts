@@ -1,4 +1,4 @@
-import { SignUpParams, SignUpResponse } from '@/Domain/Users/Models/User'
+import { SignUpParams, User } from '@/Domain/Users/Models/User'
 
 export interface isEmailOrUsernameInUseParams {
   email: string
@@ -6,6 +6,6 @@ export interface isEmailOrUsernameInUseParams {
 }
 
 export interface UserRepository {
-  createUserRespository(params: SignUpParams): Promise<SignUpResponse>
+  createUserRespository(params: SignUpParams): Promise<Omit<User, 'password'>>
   isEmailOrUsernameInUse(params: isEmailOrUsernameInUseParams): Promise<boolean>
 }

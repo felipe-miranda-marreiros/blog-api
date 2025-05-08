@@ -7,7 +7,7 @@ import {
 } from '@/Presentation/Contracts/Controller'
 import { Validation } from '@/Presentation/Contracts/Validation'
 
-export class CreateUserController implements Controller {
+export class SignUpController implements Controller {
   constructor(
     private readonly createUserUseCase: SignUp,
     private readonly validation: Validation
@@ -17,10 +17,10 @@ export class CreateUserController implements Controller {
     request: HttpRequest<SignUpParams>
   ): Promise<HttpResponse<SignUpResponse>> {
     const result = this.validation.validate(request.body)
-    const user = await this.createUserUseCase.signUp(result)
+    const accessToken = await this.createUserUseCase.signUp(result)
     return {
       status_code: 200,
-      body: user
+      body: accessToken
     }
   }
 }

@@ -15,6 +15,8 @@ export class BadRequestError extends CustomError {
     if (typeof this.errors === 'string') {
       return [{ message: this.message }]
     }
+    console.log(this.errors)
+
     return this.errors.map((error) => ({
       message: error.message,
       field: error.path[0] as string

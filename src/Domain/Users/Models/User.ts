@@ -17,4 +17,6 @@ export type SignUpParams = {
   email: string
 }
 
-export type SignUpResponse = Omit<User, 'password'>
+export type SignUpResponse = {
+  access_token: string
+}
