@@ -161,7 +161,10 @@ Applied throughout the codebase.
 ### Known Issues
 
 #1 DDD:
-- This project violates the Rich Domain approch (Value Objects, Entities, AggregateRoots, Domain Events, Domain Services) on this project. Insted I decided to use Anemic Domain with emphasis on invariants only. I don't have much time to elaborate this kind of features in TypeScript. However, you can see the same project but in Java (Spring Boot) here (soon).
+- This project violates the Rich Domain approach (Value Objects, Entities, AggregateRoots, Domain Events, Domain Services). Insted I decided to use Anemic Domain with emphasis on invariants only. I don't have much time to elaborate this kind of features in TypeScript. However, you can see the same project but in Java (Spring Boot) here (soon).
 
 #2 Authentication and Authorization:
-- This project violates the generic subdomain rule. A generic subdomain is an area of the business that is important for operations but doesn't provide a competitive advantage. We shouldn't build authentication or authorization, but instead "buy, don't build". Alternatives like Keycloak and OAuth2 are battle tested and secure.
+- This project violates the generic subdomain approach. A generic subdomain is an area of the business that is important for operations but doesn't provide a competitive advantage. We shouldn't build authentication or authorization, but instead "buy, don't build". Alternatives like Keycloak and OAuth2 are battle tested and secure.
+
+#3 Cohesion and Layered Architecture
+- Layered Architecture can be welcome on medium-size projects. This means that the level of cohesion can decreased when adding more UseCases, making it hard for developers read, find modules and business rules. Vertical Slice Architecture or Feature-Based approaches can be a better alternative for refactoring later on.
