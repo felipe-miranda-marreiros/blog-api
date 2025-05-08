@@ -1,6 +1,6 @@
 import { db } from '@/Infrastructure/Database/Drizzle/DrizzleClient'
 import { UserSQLRepository } from '@/Infrastructure/Database/Repositories/UserSQLRepository'
-import { emails } from '@/Infrastructure/Database/Schemas/Schemas'
+import { emails, usernames } from '@/Infrastructure/Database/Schemas/Schemas'
 
 describe('User Repository', () => {
   let userSQLRepository = null as unknown as UserSQLRepository
@@ -37,5 +37,20 @@ describe('User Repository', () => {
       usedEmail[0].usedEmail
     )
     expect(isEmailInUse).toEqual(true)
+  })
+  it('Should return false if isUsernameInUse does not find an username equals to params', async () => {
+    const isUsernameInUse =
+      await userSQLRepository.isUsernameInUse('avaiable_username')
+    expect(isUsernameInUse).toEqual(false)
+  })
+  it('Should return true if isUsernameInUse does find an username equals to params', async () => {
+    const usedUsername = await db
+      .insert(usernames)
+      .values({ username: 'used_username' })
+      .returning({ usedUsername: usernames.username })
+    const isUsernameInUse = await userSQLRepository.isUsernameInUse(
+      usedUsername[0].usedUsername
+    )
+    expect(isUsernameInUse).toEqual(true)
   })
 })
