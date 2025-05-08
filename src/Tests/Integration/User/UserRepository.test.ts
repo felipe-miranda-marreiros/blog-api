@@ -10,7 +10,7 @@ describe('User Repository', () => {
       username: 'any_username'
     }
     const userSQLRepository = new UserSQLRepository()
-    const user = await userSQLRepository.createUserRespository(createUserMock)
+    const user = await userSQLRepository.createUser(createUserMock)
     expect(user.first_name).toEqual(createUserMock.first_name)
     expect(user.last_name).toEqual(createUserMock.last_name)
     expect(user).not.toHaveProperty('password')
