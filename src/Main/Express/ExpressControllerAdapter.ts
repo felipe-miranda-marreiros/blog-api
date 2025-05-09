@@ -1,9 +1,5 @@
-import {
-  Controller,
-  Cookies,
-  Headers,
-  HttpRequest
-} from '@/Presentation/Contracts/Controller'
+import { Controller } from '@/Presentation/Contracts/Controller'
+import { Cookies, Headers, HttpRequest } from '@/Presentation/Contracts/Http'
 import { Request, Response } from 'express'
 
 export function expressControllerAdapter(controller: Controller) {

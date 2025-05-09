@@ -1,16 +1,14 @@
 import { Router } from 'express'
 import { SignUpController } from '@/Presentation/Controllers/SignUpController/SignUpController'
-import { SignUpUseCase } from '@/Application/Modules/Users/UseCases/SignUpUseCase/SignUpUseCase'
+import { SignUpUseCase } from '@/Application/Modules/Authentication/UseCases/SignUpUseCase/SignUpUseCase'
 import { userRepository } from '../Dependencies/UserRepository'
 import { ZodAdapter } from '@/Main/Zod/ZodAdapter'
 import { z } from 'zod'
-import { BcryptAdapter } from '@/Infrastructure/Cryptography/BcryptAdapter'
-import { JwtAdapter } from '@/Infrastructure/Cryptography/JwtAdapter'
-import { SignUpParams } from '@/Domain/Users/Models/User'
+import { bcryptAdapter, jwtAdapter } from '@/Main/Dependencies/Infrastructure'
+import { SignUpParams } from '@/Domain/Authentication/UseCases/SignUp'
 
-export const userRoutes = Router()
-const bcryptAdapter = new BcryptAdapter(12)
-const jwtAdapter = new JwtAdapter('jwt_secret')
+export const signUpRoutes = Router()
+
 const createUserUseCase = new SignUpUseCase(
   userRepository,
   bcryptAdapter,
@@ -30,7 +28,7 @@ const signUpController = new SignUpController(
   createUserValidation
 )
 
-userRoutes.post('/api/sign-up', async (req, res) => {
+signUpRoutes.post('/api/auth/sign-up', async (req, res) => {
   const response = await signUpController.handle({ body: req.body })
   res.cookie('jwt', response.body?.access_token)
   res.status(response.status_code).json({})

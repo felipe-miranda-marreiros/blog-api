@@ -1,8 +1,8 @@
 import express from 'express'
-import { userRoutes } from '../Routes/SignUp/SignUpRoute/SignUpRoute'
 import { errorHandlerMiddleware } from './ErrorHandlerMiddleware'
+import { signUpRoutes } from '../Routes/Authentication/SignUp/SignUpRoute/SignUpRoute'
 
 export const app = express()
 app.use(express.json())
-app.use(userRoutes)
+app.use(signUpRoutes)
 app.use(errorHandlerMiddleware)

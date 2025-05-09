@@ -1,9 +1,10 @@
 import { UserRepository } from '@/Application/Contracts/Repositories/UserRepository'
-import { SignUpParams, User } from '@/Domain/Users/Models/User'
 import { db } from '../Drizzle/DrizzleClient'
 import { emails, usernames, users } from '../Schemas/Schemas'
 import { getISOFormatDateQuery } from '../Helpers/Helpers'
 import { eq } from 'drizzle-orm'
+import { SignUpParams } from '@/Domain/Authentication/UseCases/SignUp'
+import { LoggedInUser } from '@/Domain/Users/Models/User'
 
 export class UserSQLRepository implements UserRepository {
   async isEmailInUse(email: string): Promise<boolean> {
@@ -19,7 +20,7 @@ export class UserSQLRepository implements UserRepository {
     return result.length > 0
   }
 
-  async createUser(params: SignUpParams): Promise<Omit<User, 'password'>> {
+  async createUser(params: SignUpParams): Promise<LoggedInUser> {
     const result = await db.transaction(async (tx) => {
       const usernameTransaction = await tx
         .insert(usernames)

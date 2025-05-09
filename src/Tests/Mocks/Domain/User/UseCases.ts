@@ -1,4 +1,8 @@
-import { SignUpParams, SignUpResponse, User } from '@/Domain/Users/Models/User'
+import {
+  SignUpParams,
+  SignUpResponse
+} from '@/Domain/Authentication/UseCases/SignUp'
+import { LoggedInUser } from '@/Domain/Users/Models/User'
 
 export const signUpParamsMock: SignUpParams = {
   email: 'any_email',
@@ -12,7 +16,7 @@ export const signUpResponseMock: SignUpResponse = {
   access_token: 'encrypted_value'
 }
 
-export const createUserRepositoryMock: Omit<User, 'password'> = {
+export const createUserRepositoryMock: LoggedInUser = {
   created_at: 'any_date',
   email_id: 1,
   first_name: 'any_name',

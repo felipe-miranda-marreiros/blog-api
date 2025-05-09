@@ -1,5 +1,8 @@
-import { SignUpParams, SignUpResponse } from '@/Domain/Users/Models/User'
-import { SignUp } from '@/Domain/Users/UseCases/SignUp'
+import {
+  SignUp,
+  SignUpParams,
+  SignUpResponse
+} from '@/Domain/Authentication/UseCases/SignUp'
 import { Validation } from '@/Presentation/Contracts/Validation'
 import { SignUpController } from '@/Presentation/Controllers/SignUpController/SignUpController'
 import {

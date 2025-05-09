@@ -1,10 +1,10 @@
-import { SignUpParams, SignUpResponse } from '@/Domain/Users/Models/User'
-import { SignUp } from '@/Domain/Users/UseCases/SignUp'
 import {
-  Controller,
-  HttpRequest,
-  HttpResponse
-} from '@/Presentation/Contracts/Controller'
+  SignUp,
+  SignUpParams,
+  SignUpResponse
+} from '@/Domain/Authentication/UseCases/SignUp'
+import { Controller } from '@/Presentation/Contracts/Controller'
+import { HttpRequest, HttpResponse } from '@/Presentation/Contracts/Http'
 import { Validation } from '@/Presentation/Contracts/Validation'
 
 export class SignUpController implements Controller {

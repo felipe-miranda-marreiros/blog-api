@@ -2,8 +2,11 @@ import { Encrypter } from '@/Application/Contracts/Criptography/Encrypter'
 import { Hasher } from '@/Application/Contracts/Criptography/Hasher'
 import { ConflictError } from '@/Application/Contracts/Errors/ConflictError'
 import { UserRepository } from '@/Application/Contracts/Repositories/UserRepository'
-import { SignUpParams, SignUpResponse } from '@/Domain/Users/Models/User'
-import { SignUp } from '@/Domain/Users/UseCases/SignUp'
+import {
+  SignUp,
+  SignUpParams,
+  SignUpResponse
+} from '@/Domain/Authentication/UseCases/SignUp'
 
 export class SignUpUseCase implements SignUp {
   constructor(

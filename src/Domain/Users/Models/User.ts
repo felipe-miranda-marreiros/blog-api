@@ -9,14 +9,4 @@ export interface User {
   updated_at: string
 }
 
-export type SignUpParams = {
-  username: string
-  password: string
-  first_name: string
-  last_name: string
-  email: string
-}
-
-export type SignUpResponse = {
-  access_token: string
-}
+export type LoggedInUser = Omit<User, 'password'>
