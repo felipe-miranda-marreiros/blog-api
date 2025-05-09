@@ -1,4 +1,4 @@
-# blog-api
+# blog-api - In Progress
 
 ## Stack
 
@@ -151,12 +151,9 @@ export const getTicketByIdUseCase: GetTicketById = async (params) => {
 #### **Validation:**
 Checking data integrity or constraints in multiple places. I decided to use Zod. We can use ZodInfer and ZodOutput interfaces to directly transform the input to domain model.
 
-- Monitoring & Telemetry:
-Collecting performance and health data across the application.
-//TODO
+- Monitoring & Telemetry: //TODO
 
-- Security (e.g., input sanitization, encryption):
-Applied throughout the codebase.
+- Security (e.g., input sanitization, encryption): //TODO
 
 ### Known Issues
 
