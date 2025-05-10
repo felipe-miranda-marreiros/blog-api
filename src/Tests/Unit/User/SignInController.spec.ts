@@ -31,12 +31,18 @@ function createSut(): Sut {
 }
 
 describe('SignIn Controller', () => {
-  it('Should return NotFoundError if getUserByEmail return undefined', async () => {
+  it('Should return NotFoundError if getUserByEmail returns undefined', async () => {
     const { sut, userRepositoryStub } = createSut()
     jest
       .spyOn(userRepositoryStub, 'getUserByEmail')
       .mockResolvedValueOnce(undefined)
     const promise = sut.signIn(signInParamsMock)
     await expect(promise).rejects.toThrow(NotFoundError)
+  })
+  it('Should call getUserByEmail with correct values', async () => {
+    const { sut, userRepositoryStub } = createSut()
+    const getUserByEmailSpy = jest.spyOn(userRepositoryStub, 'getUserByEmail')
+    await sut.signIn(signInParamsMock)
+    expect(getUserByEmailSpy).toHaveBeenCalledWith(signInParamsMock.email)
   })
 })
