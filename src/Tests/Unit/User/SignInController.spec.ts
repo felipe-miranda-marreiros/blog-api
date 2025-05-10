@@ -1,6 +1,7 @@
 import { Encrypter } from '@/Application/Contracts/Criptography/Encrypter'
 import { HashComparer } from '@/Application/Contracts/Criptography/HashComparer'
 import { NotFoundError } from '@/Application/Contracts/Errors/NotFoundError'
+import { UnauthorizedError } from '@/Application/Contracts/Errors/UnauthorizedError'
 import { UserRepository } from '@/Application/Contracts/Repositories/UserRepository'
 import { SignInUseCase } from '@/Application/Modules/Authentication/UseCases/SignInUseCase/SignInUseCase'
 import { SignIn } from '@/Domain/Authentication/UseCases/SignIn'
@@ -44,5 +45,11 @@ describe('SignIn Controller', () => {
     const getUserByEmailSpy = jest.spyOn(userRepositoryStub, 'getUserByEmail')
     await sut.signIn(signInParamsMock)
     expect(getUserByEmailSpy).toHaveBeenCalledWith(signInParamsMock.email)
+  })
+  it('Should return UnauthorizedError if HashComparer returns false', async () => {
+    const { sut, hasherStub } = createSut()
+    jest.spyOn(hasherStub, 'compare').mockResolvedValueOnce(false)
+    const promise = sut.signIn(signInParamsMock)
+    await expect(promise).rejects.toThrow(UnauthorizedError)
   })
 })
