@@ -5,7 +5,7 @@ describe('User Routes', () => {
   describe('POST', () => {
     it('Should return 200 if payload is correct', async () => {
       await request(app)
-        .post('/api/sign-up')
+        .post('/api/auth/sign-up')
         .send({
           email: 'testing_email@gmail.com',
           first_name: 'any_first_name',
@@ -19,7 +19,7 @@ describe('User Routes', () => {
 
     it('Should return 200 and a cookie on sign up', async () => {
       const response = await request(app)
-        .post('/api/sign-up')
+        .post('/api/auth/sign-up')
         .send({
           email: 'cookie_email@gmail.com',
           password: 'cookie_password',

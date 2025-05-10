@@ -1,3 +1,4 @@
+import { SignUpParams } from '@/Domain/Authentication/UseCases/SignUp'
 import { db } from '@/Infrastructure/Database/Drizzle/DrizzleClient'
 import { UserSQLRepository } from '@/Infrastructure/Database/Repositories/UserSQLRepository'
 import { emails, usernames } from '@/Infrastructure/Database/Schemas/Schemas'
@@ -10,7 +11,7 @@ describe('User Repository', () => {
   })
 
   it('Should insert an User into database and return its model', async () => {
-    const createUserMock = {
+    const createUserMock: SignUpParams = {
       email: 'any_email@gmail.com',
       first_name: 'any_first_name',
       last_name: 'any_last_name',
@@ -52,5 +53,18 @@ describe('User Repository', () => {
       usedUsername[0].usedUsername
     )
     expect(isUsernameInUse).toEqual(true)
+  })
+  it('Should return an User if getUserByEmail does find based on email', async () => {
+    const createUserMock: SignUpParams = {
+      email: 'test1@gmail.com',
+      first_name: 'any_first_name',
+      last_name: 'any_last_name',
+      password: 'any_password',
+      username: 'test1_username'
+    }
+    await userSQLRepository.createUser(createUserMock)
+    const user = await userSQLRepository.getUserByEmail(createUserMock.email)
+    expect(user).toBeDefined()
+    console.log('getUserByEmail', user)
   })
 })

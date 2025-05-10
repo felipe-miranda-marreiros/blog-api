@@ -14,6 +14,7 @@ const createUserUseCase = new SignUpUseCase(
   bcryptAdapter,
   jwtAdapter
 )
+
 const createUserSchema = z.object({
   email: z.string().email().nonempty(),
   first_name: z.string().nonempty(),

@@ -7,6 +7,7 @@ import { expressMiddlewareAdapter } from '@/Main/Express/ExpressMiddlewareAdapte
 import { AuthenticationMiddleware } from '@/Presentation/Middlewares/AuthenticationMiddleware'
 import { AuthenticationUseCase } from '@/Application/Modules/Authentication/UseCases/AuthenticationUseCase/AuthenticationUseCase'
 import { jwtAdapter } from '@/Main/Dependencies/Infrastructure'
+import { expressAuthenticationMiddleware } from '@/Main/Express/AuthMiddleware'
 
 export const userRoutes = Router()
 
@@ -19,7 +20,9 @@ const currentUserUsecase = new CurrentUserUseCase(nodeUserContextAdapter)
 const currentUserController = new CurrentUserController(currentUserUsecase)
 
 userRoutes.use(expressMiddlewareAdapter(authenticationMiddleware))
-userRoutes.post(
+userRoutes.use(expressAuthenticationMiddleware)
+
+userRoutes.get(
   '/api/users/current-user',
   expressControllerAdapter(currentUserController)
 )

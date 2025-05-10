@@ -4,9 +4,25 @@ import { emails, usernames, users } from '../Schemas/Schemas'
 import { getISOFormatDateQuery } from '../Helpers/Helpers'
 import { eq } from 'drizzle-orm'
 import { SignUpParams } from '@/Domain/Authentication/UseCases/SignUp'
-import { LoggedInUser } from '@/Domain/Users/Models/User'
+import { LoggedInUser, User } from '@/Domain/Users/Models/User'
 
 export class UserSQLRepository implements UserRepository {
+  async getUserByEmail(email: string): Promise<User | undefined> {
+    const result = await db
+      .select()
+      .from(emails)
+      .where(eq(emails.email, email))
+      .leftJoin(users, eq(users.email_id, emails.id))
+
+    if (result[0]?.users) {
+      return {
+        ...result[0]?.users,
+        created_at: result[0].users.created_at.toISOString(),
+        updated_at: result[0].users.updated_at.toISOString()
+      }
+    }
+  }
+
   async isEmailInUse(email: string): Promise<boolean> {
     const result = await db.select().from(emails).where(eq(emails.email, email))
     return result.length > 0
