@@ -52,4 +52,13 @@ describe('SignIn Controller', () => {
     const promise = sut.signIn(signInParamsMock)
     await expect(promise).rejects.toThrow(UnauthorizedError)
   })
+  it('Should call HashComparer with correct values', async () => {
+    const { sut, hasherStub } = createSut()
+    const compareSpy = jest.spyOn(hasherStub, 'compare')
+    await sut.signIn(signInParamsMock)
+    expect(compareSpy).toHaveBeenCalledWith(
+      signInParamsMock.password,
+      'any_password'
+    )
+  })
 })
