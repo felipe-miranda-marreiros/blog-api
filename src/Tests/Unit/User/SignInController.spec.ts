@@ -81,4 +81,9 @@ describe('SignIn Controller', () => {
       username_id: 1
     })
   })
+  it('Should return a jwt if params are valid', async () => {
+    const { sut } = createSut()
+    const response = await sut.signIn(signInParamsMock)
+    expect(response).toEqual({ jwt: 'encrypted_value' })
+  })
 })
