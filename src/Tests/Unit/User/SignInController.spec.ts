@@ -67,4 +67,18 @@ describe('SignIn Controller', () => {
     const promise = sut.signIn(signInParamsMock)
     await expect(promise).rejects.toThrow()
   })
+  it('Should call Encrypter with correct values', async () => {
+    const { sut, encrypterStub } = createSut()
+    const encryptSpy = jest.spyOn(encrypterStub, 'encrypt')
+    await sut.signIn(signInParamsMock)
+    expect(encryptSpy).toHaveBeenCalledWith({
+      created_at: 'any_date',
+      email_id: 1,
+      first_name: 'any_first_name',
+      id: 1,
+      last_name: 'any_last_name',
+      updated_at: 'any_date',
+      username_id: 1
+    })
+  })
 })
