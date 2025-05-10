@@ -61,4 +61,10 @@ describe('SignIn Controller', () => {
       'any_password'
     )
   })
+  it('Should throw if Encrypter throws', async () => {
+    const { sut, encrypterStub } = createSut()
+    jest.spyOn(encrypterStub, 'encrypt').mockRejectedValueOnce(new Error())
+    const promise = sut.signIn(signInParamsMock)
+    await expect(promise).rejects.toThrow()
+  })
 })
