@@ -6,7 +6,7 @@ import {
 import { migrate } from 'drizzle-orm/node-postgres/migrator'
 import { drizzle } from 'drizzle-orm/node-postgres'
 import { Wait } from 'testcontainers'
-import { pool } from '../../../Infrastructure/Database/Drizzle/DrizzleClient'
+import { pool } from '../../Infrastructure/Database/Drizzle/DrizzleClient'
 
 export const testContainers = {
   db: null as unknown as StartedPostgreSqlContainer,
