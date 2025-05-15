@@ -25,6 +25,7 @@
       - [1 - DDD:](#1---ddd)
       - [2 - Authentication and Authorization:](#2---authentication-and-authorization)
       - [3 - Cohesion and Layered Architecture](#3---cohesion-and-layered-architecture)
+      - [4 - Dependency Injection and Dependency Injection Container](#4---dependency-injection-and-dependency-injection-container)
 
 ## About
 
@@ -224,3 +225,7 @@ This project violates the Rich Domain approach (Value Objects, Entities, Aggrega
 #### 3 - Cohesion and Layered Architecture
 
 - Layered Architecture can be welcome on medium-size projects. This means that the level of cohesion can decreased when adding more Use Cases, making it hard for developers read, find modules and business rules. Vertical Slice Architecture or Feature-Based approaches can be a better alternative for refactoring later on.
+
+#### 4 - Dependency Injection and Dependency Injection Container
+
+- Alternatives like NestJs can be better option instead of manually injecting dependencies hierarchically. This project does not use any DI Containers.
