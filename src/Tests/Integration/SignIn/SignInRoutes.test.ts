@@ -40,3 +40,14 @@ describe('SignIn Routes', () => {
       .expect(400)
   })
 })
+
+it('Should return 400 if password is not valid', async () => {
+  await request(app)
+    .post('/api/auth/sign-in')
+    .send({
+      email: 'valid@gmail.com',
+      password: ''
+    })
+    .set('Accept', 'application/json')
+    .expect(400)
+})
