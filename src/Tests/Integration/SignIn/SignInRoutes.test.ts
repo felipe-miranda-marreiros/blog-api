@@ -29,4 +29,14 @@ describe('SignIn Routes', () => {
     const accessToken = cookie?.split(';')[0].split('=')[1]
     expect(accessToken).toBeDefined()
   })
+  it('Should return 400 if email is not valid', async () => {
+    await request(app)
+      .post('/api/auth/sign-in')
+      .send({
+        email: 'invalidmail.com',
+        password: 'valid_password'
+      })
+      .set('Accept', 'application/json')
+      .expect(400)
+  })
 })
