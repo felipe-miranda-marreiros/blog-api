@@ -106,32 +106,32 @@ User is a person who will interact with Posts, Followers and Comments.
 
 With User:
 
-- An User can not create an account if email or username is already in use.
-- An User can not create an accout if password or email is invalid.
-- An User can only have one account.
+- A User can not create an account if email or username is already in use.
+- A User can not create an accout if password or email is invalid.
+- A User can only have one account.
 
 With Post:
 
-- An User can create a Post.
-- An User can edit a Post.
-- An User can delete a Post.
-- An User can archive a Post.
-- An User can not edit, delete or archive from another User.
-- An User can have many Posts.
+- A User can create a Post.
+- A User can edit a Post.
+- A User can delete a Post.
+- A User can archive a Post.
+- A User can not edit, delete or archive from another User.
+- A User can have many Posts.
 
 With Followers:
 
-- An User can follow another User.
-- An User can not follow another User if it is already following.
-- An User can unfollow another User.
-- An User can have many Followers.
+- A User can follow another User.
+- A User can not follow another User if it is already following.
+- A User can unfollow another User.
+- A User can have many Followers.
 - Users can view earch others followers.
 
 With Comments:
 
-- An User can comment another User's Post.
-- An User can not edit another User's Comment.
-- An User can not delete another User's Comment.
+- A User can comment another User's Post.
+- A User can not edit another User's Comment.
+- A User can not delete another User's Comment.
 
 ## Documentation
 
