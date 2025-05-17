@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "## Stack",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "prepare": "husky",
     "start:dev": "tsx --env-file=.env.development --watch src/Main/index.ts",
@@ -57,11 +58,13 @@
     "typescript-eslint": "^8.32.0"
   },
   "dependencies": {
+    "@fastify/cookie": "^11.0.2",
     "bcrypt": "^5.1.1",
     "cookie-parser": "^1.4.7",
     "dotenv": "^16.5.0",
     "drizzle-orm": "^0.43.1",
     "express": "^5.1.0",
+    "fastify": "^5.3.3",
     "jsonwebtoken": "^9.0.2",
     "pg": "^8.15.6",
     "zod": "^3.24.4"

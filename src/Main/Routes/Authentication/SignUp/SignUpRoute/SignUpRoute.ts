@@ -6,6 +6,7 @@ import { ZodAdapter } from '@/Main/Zod/ZodAdapter'
 import { z } from 'zod'
 import { bcryptAdapter, jwtAdapter } from '@/Main/Dependencies/Infrastructure'
 import { SignUpParams } from '@/Domain/Authentication/UseCases/SignUp'
+import { FastifyInstance, FastifyRequest } from 'fastify'
 
 export const signUpRoutes = Router()
 
@@ -34,3 +35,14 @@ signUpRoutes.post('/api/auth/sign-up', async (req, res) => {
   res.cookie('jwt', response.body?.access_token)
   res.status(response.status_code).json({})
 })
+
+export async function signUpRoute(fastify: FastifyInstance) {
+  fastify.post(
+    '/api/auth/sign-up',
+    async (req: FastifyRequest<{ Body: SignUpParams }>, res) => {
+      console.log('Controller:', req.body)
+      const response = await signUpController.handle({ body: req.body })
+      res.setCookie('jwt', response.body!.access_token)
+    }
+  )
+}

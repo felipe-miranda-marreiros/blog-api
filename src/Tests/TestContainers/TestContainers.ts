@@ -1,4 +1,3 @@
-import { Server } from 'http'
 import {
   PostgreSqlContainer,
   StartedPostgreSqlContainer
@@ -10,7 +9,6 @@ import { pool } from '../../Infrastructure/Database/Drizzle/DrizzleClient'
 
 export const testContainers = {
   db: null as unknown as StartedPostgreSqlContainer,
-  server: null as unknown as Server,
   async initSQLContainer() {
     this.db = await new PostgreSqlContainer('postgres:latest')
       .withName('test_db')
@@ -47,7 +45,6 @@ export const testContainers = {
   async closeAll() {
     pool.end().then(async () => {
       await this.db.stop()
-      this.server.close()
     })
   }
 }

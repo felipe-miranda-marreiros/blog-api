@@ -1,4 +1,3 @@
-import { SignInUseCase } from '@/Application/Modules/Authentication/UseCases/SignInUseCase/SignInUseCase'
 import { SignInController } from '@/Presentation/Controllers/SignInController/SignInController'
 import { userRepository } from '../../SignUp/Dependencies/UserRepository'
 import { bcryptAdapter, jwtAdapter } from '@/Main/Dependencies/Infrastructure'
@@ -6,6 +5,8 @@ import { z } from 'zod'
 import { ZodAdapter } from '@/Main/Zod/ZodAdapter'
 import { SignInParams } from '@/Domain/Authentication/UseCases/SignIn'
 import { Router } from 'express'
+import { FastifyInstance, FastifyRequest } from 'fastify'
+import { SignInUseCase } from '@/Application/Modules/Authentication/UseCases/SignInUseCase/SignInUseCase'
 
 export const signInRouter = Router()
 
@@ -32,3 +33,13 @@ signInRouter.post('/api/auth/sign-in', async (req, res) => {
   res.cookie('jwt', response.body?.jwt)
   res.status(response.status_code).json({})
 })
+
+export async function signInRoute(fastify: FastifyInstance) {
+  fastify.post(
+    '/api/auth/sign-in',
+    async (req: FastifyRequest<{ Body: SignInParams }>, res) => {
+      const response = await signInController.handle({ body: req.body })
+      res.setCookie('jwt', response.body!.jwt)
+    }
+  )
+}
