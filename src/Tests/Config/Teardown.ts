@@ -1,3 +1,5 @@
+import 'tsconfig-paths/register'
+
 import { testContainers } from '../TestContainers/TestContainers'
 
 process.on('uncaughtException', (error) => {})

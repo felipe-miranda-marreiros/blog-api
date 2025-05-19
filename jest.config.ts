@@ -12,7 +12,13 @@ const config: Config = {
   coverageProvider: 'v8',
   preset: 'ts-jest',
   moduleNameMapper: {
-    '^@/(.*)$': '<rootDir>/src/$1'
+    '^@/Infrastructure/(.*)$': '<rootDir>/src/Infrastructure/$1',
+    '^@/Main/(.*)$': '<rootDir>/src/Main/$1',
+    '^@/Presentation/(.*)$': '<rootDir>/src/Presentation/$1',
+    '^@/Application/(.*)$': '<rootDir>/src/Application/$1',
+    '^@/Shared/(.*)$': '<rootDir>/src/Shared/$1',
+    '^@/Tests/(.*)$': '<rootDir>/src/Tests/$1',
+    '^@/Domain/(.*)$': '<rootDir>/src/Domain/$1'
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'json'],
   transform: {

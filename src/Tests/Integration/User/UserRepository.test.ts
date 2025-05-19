@@ -65,6 +65,5 @@ describe('User Repository', () => {
     await userSQLRepository.createUser(createUserMock)
     const user = await userSQLRepository.getUserByEmail(createUserMock.email)
     expect(user).toBeDefined()
-    console.log('getUserByEmail', user)
   })
 })

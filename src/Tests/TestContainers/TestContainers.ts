@@ -41,8 +41,14 @@ export const testContainers = {
       migrationsFolder: 'drizzle'
     })
   },
+  setupEnvs() {
+    process.env.EXPRESS_PORT = 9000
+    process.env.JWT_SECRET = 'JWT_TEST_SECRECT'
+    process.env.NODE_ENV = 'development'
+  },
   async initAll() {
     await this.initSQLContainer()
+    this.setupEnvs()
   },
   async closeAll() {
     pool.end().then(async () => {
