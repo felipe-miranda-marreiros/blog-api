@@ -12,7 +12,7 @@ import { expressAuthenticationMiddleware } from '@/Main/Express/AuthMiddleware'
 export const userRoutes = Router()
 
 const authenticationUseCase = new AuthenticationUseCase(jwtAdapter)
-const authenticationMiddleware = new AuthenticationMiddleware(
+export const authenticationMiddleware = new AuthenticationMiddleware(
   authenticationUseCase
 )
 
