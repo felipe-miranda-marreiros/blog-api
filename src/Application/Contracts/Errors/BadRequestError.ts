@@ -7,6 +7,7 @@ export class BadRequestError extends CustomError {
   constructor(private readonly errors: ZodIssue[] | string) {
     if (typeof errors === 'string') {
       super(errors)
+      return
     }
     super('BadRequestError')
   }

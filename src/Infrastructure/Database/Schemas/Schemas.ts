@@ -1,4 +1,11 @@
-import { integer, pgTable, timestamp, varchar } from 'drizzle-orm/pg-core'
+import {
+  integer,
+  pgEnum,
+  pgTable,
+  text,
+  timestamp,
+  varchar
+} from 'drizzle-orm/pg-core'
 
 const baseSchema = {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
@@ -16,6 +23,16 @@ export const users = pgTable('users', {
   password: varchar({ length: 255 }).notNull(),
   first_name: varchar({ length: 255 }).notNull(),
   last_name: varchar({ length: 255 }).notNull()
+})
+
+export const articleStatusEnum = pgEnum('status', ['ACTIVE', 'ARCHIVED'])
+
+export const articles = pgTable('articles', {
+  ...baseSchema,
+  title: varchar({ length: 255 }).notNull(),
+  body: text().notNull(),
+  status: articleStatusEnum().notNull(),
+  user_id: integer().notNull()
 })
 
 export const usernames = pgTable('usernames', {

@@ -8,6 +8,13 @@
       "when": 1746656373881,
       "tag": "0000_youthful_proteus",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1747750718353,
+      "tag": "0001_awesome_ricochet",
+      "breakpoints": true
     }
   ]
 }
