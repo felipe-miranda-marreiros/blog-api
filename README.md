@@ -67,11 +67,17 @@ make docker-install
 
 I'm using Clean Architecture and Layered Architecture following this approch:
 
-- Domain
-- Application
-- Infrastructure
-- Presentation
-- Main
+![Screenshot 2025-05-20 at 14 44 36](https://github.com/user-attachments/assets/d5f4d1a1-50c3-4cda-901e-373095043dcd)
+
+In other words:
+
+- Application: It's responsible for creating application level contracts. Suppose we need to access the logged in user, we can create an abstration `UserContext` and retrive the information from Express. It's also called the orchestration layer between `Domain` and `Infrastrcuture`.
+- Presentation: Responsible for comunication between User and Business Logic (UseCases). Does not know about Infrastructure details.
+- Domain: Models that represent real Business Logic.
+- Infrastructure: Implementations following `Application` contracts.
+
+![Screenshot 2025-05-20 at 14 46 23](https://github.com/user-attachments/assets/9debe559-6a04-49b4-9187-8b1d1118a711)
+
 
 ### Design Principles
 
@@ -93,6 +99,8 @@ I'm using Clean Architecture and Layered Architecture following this approch:
 - SOLID
 
 ## Domain-Driven Design
+
+A software development approach that emphasizes understanding and modeling the business domain to create software that closely aligns with real-world business needs.
 
 ### Invariants
 
@@ -216,7 +224,7 @@ Checking data integrity or constraints in multiple places. I decided to use Zod.
 
 #### 1 - DDD:
 
-This project violates the Rich Domain approach (Value Objects, Entities, AggregateRoots, Domain Events, Domain Services). Insted I decided to use Anemic Domain with emphasis on invariants only. I don't have much time to elaborate this kind of features in TypeScript.
+- This project violates the Rich Domain approach (Value Objects, Entities, AggregateRoots, Domain Events, Domain Services). Insted I decided to use Anemic Domain with emphasis on invariants only. I don't have much time to elaborate this kind of features in TypeScript.
 
 #### 2 - Authentication and Authorization:
 
