@@ -1,5 +1,10 @@
 import { Controller } from '@/Presentation/Contracts/Controller'
-import { Cookies, Headers, HttpRequest } from '@/Presentation/Contracts/Http'
+import {
+  Cookies,
+  Headers,
+  HttpRequest,
+  Params
+} from '@/Presentation/Contracts/Http'
 import { Request, Response } from 'express'
 
 export function expressControllerAdapter(controller: Controller) {
@@ -13,7 +18,15 @@ export function expressControllerAdapter(controller: Controller) {
     const headers: Headers = {
       data: req.headers
     }
-    const httpResponse = await controller.handle(httpRequest, cookies, headers)
+    const params: Params = {
+      data: req.params
+    }
+    const httpResponse = await controller.handle(
+      httpRequest,
+      cookies,
+      headers,
+      params
+    )
     res.status(httpResponse.status_code).json(httpResponse.body)
   }
 }

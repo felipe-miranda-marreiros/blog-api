@@ -14,3 +14,7 @@ export interface Cookies<TCookies = unknown> {
 export interface Headers<THeaders = unknown> {
   data: THeaders
 }
+
+export interface Params<TParams = unknown> {
+  data: TParams
+}

@@ -1,5 +1,3 @@
-#!/bin/sh
-. "$(dirname "$0")/_/husky.sh"
 set -e
 npx tsc --noEmit
 echo "Getting staged files"
