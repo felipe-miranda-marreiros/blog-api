@@ -33,18 +33,20 @@ function createUserContext(): UserContext {
   return new UserContextStub()
 }
 
+const article: Article = {
+  body: 'any_body',
+  created_at: 'any_date',
+  id: 1,
+  status: 'ACTIVE',
+  title: 'any_title',
+  updated_at: 'any_date',
+  user_id: 1
+}
+
 function createArticleRepository() {
   class ArticleRepositoryStub implements ArticleRepository {
     async createArticle(params: CreateArticleParams): Promise<Article> {
-      return Promise.resolve({
-        body: 'any_body',
-        created_at: 'any_date',
-        id: 1,
-        status: 'ACTIVE',
-        title: 'any_title',
-        updated_at: 'any_date',
-        user_id: 1
-      })
+      return Promise.resolve(article)
     }
   }
   return new ArticleRepositoryStub()
@@ -95,5 +97,10 @@ describe('CreateArticle UseCase', () => {
       title: createArticleParams.title,
       user_id: loggedInUser.id
     })
+  })
+  it('Should create an Article correctly', async () => {
+    const { sut } = createSut()
+    const article = await sut.createArticle(createArticleParams)
+    expect(article).toEqual(article)
   })
 })
