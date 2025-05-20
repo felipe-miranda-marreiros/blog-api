@@ -11,18 +11,20 @@ interface Sut {
   articleRepositoryStub: ArticleRepository
 }
 
+const loggedInUser: LoggedInUser = {
+  created_at: 'any_date',
+  email_id: 1,
+  first_name: 'any_name',
+  id: 1,
+  last_name: 'any_name',
+  updated_at: 'any_date',
+  username_id: 1
+}
+
 function createUserContext(): UserContext {
   class UserContextStub implements UserContext {
     getLoggedInUser(): LoggedInUser {
-      return {
-        created_at: 'any_date',
-        email_id: 1,
-        first_name: 'any_name',
-        id: 1,
-        last_name: 'any_name',
-        updated_at: 'any_date',
-        username_id: 1
-      }
+      return loggedInUser
     }
     setLoggedInUser(user: LoggedInUser, callback: () => void): void {
       return
@@ -82,5 +84,16 @@ describe('CreateArticle UseCase', () => {
       .mockRejectedValueOnce(new Error())
     const promise = sut.createArticle(createArticleParams)
     await expect(promise).rejects.toThrow()
+  })
+  it('Should call CreateArticle with correct values', async () => {
+    const { sut, articleRepositoryStub } = createSut()
+    const createArticleSpy = jest.spyOn(articleRepositoryStub, 'createArticle')
+    await sut.createArticle(createArticleParams)
+    expect(createArticleSpy).toHaveBeenCalledWith({
+      body: createArticleParams.body,
+      status: 'ACTIVE',
+      title: createArticleParams.title,
+      user_id: loggedInUser.id
+    })
   })
 })
