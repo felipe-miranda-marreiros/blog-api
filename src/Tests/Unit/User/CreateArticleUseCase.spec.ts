@@ -1,5 +1,8 @@
 import { UserContext } from '@/Application/Contracts/Context/UserContext'
-import { ArticleRepository } from '@/Application/Contracts/Repositories/ArticleRepository/ArticleRepository'
+import {
+  ArticleRepository,
+  UpdateArticleParams
+} from '@/Application/Contracts/Repositories/ArticleRepository/ArticleRepository'
 import { CreateArticleUseCase } from '@/Application/Modules/Articles/UseCases/CreateArticleUseCase/CreateArticleUseCase'
 import { Article } from '@/Domain/Articles/Models/Article'
 import { CreateArticleParams } from '@/Domain/Articles/UseCases/CreateArticle'
@@ -45,6 +48,12 @@ const article: Article = {
 
 function createArticleRepository() {
   class ArticleRepositoryStub implements ArticleRepository {
+    updateArticle(params: UpdateArticleParams): Promise<Article> {
+      throw new Error('Method not implemented.')
+    }
+    getArticleById(id: number): Promise<Article | undefined> {
+      throw new Error('Method not implemented.')
+    }
     async createArticle(params: CreateArticleParams): Promise<Article> {
       return Promise.resolve(article)
     }
