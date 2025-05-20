@@ -75,4 +75,12 @@ describe('CreateArticle UseCase', () => {
     const promise = sut.createArticle(createArticleParams)
     await expect(promise).rejects.toThrow()
   })
+  it('Should throw if CreateArticle throws', async () => {
+    const { sut, articleRepositoryStub } = createSut()
+    jest
+      .spyOn(articleRepositoryStub, 'createArticle')
+      .mockRejectedValueOnce(new Error())
+    const promise = sut.createArticle(createArticleParams)
+    await expect(promise).rejects.toThrow()
+  })
 })
