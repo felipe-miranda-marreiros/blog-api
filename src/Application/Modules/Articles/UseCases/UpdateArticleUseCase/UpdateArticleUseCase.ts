@@ -2,10 +2,10 @@ import { UserContext } from '@/Application/Contracts/Context/UserContext'
 import { ConflictError } from '@/Application/Contracts/Errors/ConflictError'
 import { NotFoundError } from '@/Application/Contracts/Errors/NotFoundError'
 import { ArticleRepository } from '@/Application/Contracts/Repositories/ArticleRepository/ArticleRepository'
-import { Article } from '@/Domain/Articles/Models/Article'
 import {
   UpdateArticle,
-  UpdateArticleParams
+  UpdateArticleParams,
+  UpdateArticleResponse
 } from '@/Domain/Articles/UseCases/UpdateArticle'
 
 export class UpdateArticleUseCase implements UpdateArticle {
@@ -14,7 +14,9 @@ export class UpdateArticleUseCase implements UpdateArticle {
     private readonly userContext: UserContext
   ) {}
 
-  async updateArticle(params: UpdateArticleParams): Promise<Article> {
+  async updateArticle(
+    params: UpdateArticleParams
+  ): Promise<UpdateArticleResponse> {
     const user = this.userContext.getLoggedInUser()
 
     const targetArticle = await this.articleRepository.getArticleById(params.id)
