@@ -1,9 +1,9 @@
 import { UserContext } from '@/Application/Contracts/Context/UserContext'
 import { ArticleRepository } from '@/Application/Contracts/Repositories/ArticleRepository/ArticleRepository'
-import { Article } from '@/Domain/Articles/Models/Article'
 import {
   CreateArticle,
-  CreateArticleParams
+  CreateArticleParams,
+  CreateArticleResponse
 } from '@/Domain/Articles/UseCases/CreateArticle'
 
 export class CreateArticleUseCase implements CreateArticle {
@@ -12,7 +12,9 @@ export class CreateArticleUseCase implements CreateArticle {
     private readonly articleRepository: ArticleRepository
   ) {}
 
-  async createArticle(params: CreateArticleParams): Promise<Article> {
+  async createArticle(
+    params: CreateArticleParams
+  ): Promise<CreateArticleResponse> {
     const user = this.userContext.getLoggedInUser()
     const article = await this.articleRepository.createArticle({
       body: params.body,
