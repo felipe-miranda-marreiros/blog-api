@@ -17,15 +17,16 @@
     - [Users Example](#users-example)
       - [An Invariant Example](#an-invariant-example)
   - [Documentation](#documentation)
+    - [AuthenticationApiSpec Example](#authenticationapispec-example)
   - [Cross-Cutting Concerns](#cross-cutting-concerns)
     - [Overview](#overview)
       - [Error Handling](#error-handling)
       - [Validation](#validation)
   - [Known Issues](#known-issues)
-      - [1 - DDD:](#1---ddd)
-      - [2 - Authentication and Authorization:](#2---authentication-and-authorization)
-      - [3 - Cohesion and Layered Architecture](#3---cohesion-and-layered-architecture)
-      - [4 - Dependency Injection and Dependency Injection Container](#4---dependency-injection-and-dependency-injection-container)
+    - [1 - DDD:](#1---ddd)
+    - [2 - Authentication and Authorization:](#2---authentication-and-authorization)
+    - [3 - Cohesion and Layered Architecture](#3---cohesion-and-layered-architecture)
+    - [4 - Dependency Injection and Dependency Injection Container](#4---dependency-injection-and-dependency-injection-container)
 
 ## About
 
@@ -77,7 +78,6 @@ In other words:
 - Infrastructure: Implementations following `Application` contracts.
 
 ![Screenshot 2025-05-20 at 14 46 23](https://github.com/user-attachments/assets/9debe559-6a04-49b4-9187-8b1d1118a711)
-
 
 ### Design Principles
 
@@ -142,6 +142,47 @@ With Comments:
 - A User can not delete another User's Comment.
 
 ## Documentation
+
+Following OpenAPI 3.0.3 with `tspec` to auto-generate documentation based on Domain models.
+
+Here's an example:
+
+### AuthenticationApiSpec Example
+
+```ts
+// src/Main/Docs/AuthenticationApiSpec.ts
+import {
+  CreateArticleParams,
+  CreateArticleResponse
+} from '@/Domain/Articles/UseCases/CreateArticle'
+import {
+  UpdateArticleParams,
+  UpdateArticleResponse
+} from '@/Domain/Articles/UseCases/UpdateArticle'
+import { Tspec } from 'tspec'
+
+export type ArticleApiSpec = Tspec.DefineApiSpec<{
+  basePath: '/api/articles'
+  tags: ['Articles']
+  paths: {
+    '/': {
+      post: {
+        summary: 'Create a new article'
+        body: CreateArticleParams
+        responses: { 201: CreateArticleResponse }
+      }
+    }
+    '/{id}': {
+      put: {
+        summary: 'Update an existing article'
+        path: { id: number }
+        body: Omit<UpdateArticleParams, 'id'>
+        responses: { 200: UpdateArticleResponse }
+      }
+    }
+  }
+}>
+```
 
 ## Cross-Cutting Concerns
 
