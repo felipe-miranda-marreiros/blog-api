@@ -242,6 +242,12 @@ This example will output in a json format:
 Verifying user identity and access control in many parts of the system.
 
 - Authentication Method: Email and password. Password compare.
+
+This method requires the password to be hashed first before creating a user:
+
+![Screenshot 2025-05-26 at 17 37 36](https://github.com/user-attachments/assets/6cc32c45-1b93-4f7d-9d7b-57f2654283d1)
+
+
 - Authorization Method: JWT (`jsonwebtoken`) with `Cookie based` transport via HTTPS only.
 
 - Caching: TODO
