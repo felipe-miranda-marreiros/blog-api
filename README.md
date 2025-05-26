@@ -17,16 +17,18 @@
     - [Users Example](#users-example)
       - [An Invariant Example](#an-invariant-example)
   - [Documentation](#documentation)
-    - [AuthenticationApiSpec Example](#authenticationapispec-example)
+    - [ArticleApiSpec Example](#articleapispec-example)
   - [Cross-Cutting Concerns](#cross-cutting-concerns)
     - [Overview](#overview)
+      - [Logging:](#logging)
+      - [Authentication \& Authorization:](#authentication--authorization)
       - [Error Handling](#error-handling)
       - [Validation](#validation)
   - [Known Issues](#known-issues)
-    - [1 - DDD:](#1---ddd)
-    - [2 - Authentication and Authorization:](#2---authentication-and-authorization)
-    - [3 - Cohesion and Layered Architecture](#3---cohesion-and-layered-architecture)
-    - [4 - Dependency Injection and Dependency Injection Container](#4---dependency-injection-and-dependency-injection-container)
+      - [1 - DDD:](#1---ddd)
+      - [2 - Authentication and Authorization:](#2---authentication-and-authorization)
+      - [3 - Cohesion and Layered Architecture](#3---cohesion-and-layered-architecture)
+      - [4 - Dependency Injection and Dependency Injection Container](#4---dependency-injection-and-dependency-injection-container)
 
 ## About
 
@@ -72,10 +74,10 @@ I'm using Clean Architecture and Layered Architecture following this approch:
 
 In other words:
 
-- Application: It's responsible for creating application level contracts. Suppose we need to access the logged in user, we can create an abstration `UserContext` and retrive the information from Express. It's also called the orchestration layer between `Domain` and `Infrastrcuture`.
-- Presentation: Responsible for comunication between User and Business Logic (UseCases). Does not know about Infrastructure details.
-- Domain: Models that represent real Business Logic.
-- Infrastructure: Implementations following `Application` contracts.
+- `Application`: It's responsible for creating application level contracts. Suppose we need to access the logged in user, we can create an abstration `UserContext` and retrive the information from Express. It's also called the orchestration layer between `Domain` and `Infrastrcuture`.
+- `Presentation`: Responsible for comunication between User and Business Logic (UseCases). Does not know about Infrastructure details.
+- `Domain`: Models that represent real Business Logic.
+- `Infrastructure`: Implementations following `Application` contracts.
 
 ![Screenshot 2025-05-20 at 14 46 23](https://github.com/user-attachments/assets/9debe559-6a04-49b4-9187-8b1d1118a711)
 
@@ -147,10 +149,10 @@ Following OpenAPI 3.0.3 with `tspec` to auto-generate documentation based on Dom
 
 Here's an example:
 
-### AuthenticationApiSpec Example
+### ArticleApiSpec Example
 
 ```ts
-// src/Main/Docs/AuthenticationApiSpec.ts
+// src/Main/Docs/ArticleApiSpec.ts
 import {
   CreateArticleParams,
   CreateArticleResponse
@@ -190,14 +192,59 @@ Cross-cutting concerns are aspects of a software system that affect multiple par
 
 ### Overview
 
-- Logging:
-  Capturing application behavior, errors, or metrics across all modules.
+#### Logging:
 
-- Authentication & Authorization:
-  Verifying user identity and access control in many parts of the system.
+This project uses [`Pino`](https://www.npmjs.com/package/pino) for logging.
 
-- Caching:
-  Storing frequently accessed data, used across different services or components.
+This means we have a `Structured Logging`. Structured logging involves capturing log messages in a standardized format, using a predefined schema or format such as JSON or XML.
+
+```ts
+export class CreateArticleUseCase implements CreateArticle {
+  constructor(
+    private readonly userContext: UserContext,
+    private readonly articleRepository: ArticleRepository
+  ) {}
+
+  async createArticle(
+    params: CreateArticleParams
+  ): Promise<CreateArticleResponse> {
+    const user = this.userContext.getLoggedInUser()
+    logger.info(`User (${user.id}) started creating an Article`)
+
+    logger.info(`Trying to save article`, params)
+    const article = await this.articleRepository.createArticle({
+      body: params.body,
+      status: 'ACTIVE',
+      title: params.title,
+      user_id: user.id
+    })
+
+    logger.info('Article was created successfully', article)
+    return article
+  }
+}
+```
+
+This example will output in a json format:
+
+```json
+{
+  "timestamp": "2023-06-22 12:34:56",
+  "level": "INFO",
+  "message": "User logged in",
+  "user_id": "steve_rogers",
+  "source": "login-service"
+}
+```
+
+#### Authentication & Authorization:
+
+Verifying user identity and access control in many parts of the system.
+
+- Authentication Method: Email and password. Password compare.
+- Authorization Method: JWT (`jsonwebtoken`) with `Cookie based` transport via HTTPS only.
+
+- Caching: TODO
 
 #### Error Handling
 
