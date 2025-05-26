@@ -9,9 +9,9 @@ import { updateArticleRouter } from '@/Main/Routes/Articles/UpdateArticle/Update
 import { expressRequestContextMiddleware } from './ExpressRequestContextMiddleware'
 
 export const app = express()
+app.use(expressRequestContextMiddleware)
 app.use(cookieParser())
 app.use(express.json())
-app.use(expressRequestContextMiddleware)
 app.use(signUpRoutes)
 app.use(signInRouter)
 app.use(userRoutes)

@@ -1,8 +1,8 @@
 import { Logger } from '@/Application/Contracts/Logger/Logger'
-import { AsyncLocalStorage } from 'node:async_hooks'
-import pino, { Logger as PinnoLoger } from 'pino'
+import pino, { Logger as PinoLogger } from 'pino'
 
 export const baseLogger = pino({
+  level: 'info',
   timestamp: () => `,"timestamp":"${new Date(Date.now()).toISOString()}"`,
   transport: {
     target: 'pino-pretty',
@@ -11,30 +11,26 @@ export const baseLogger = pino({
     }
   },
   redact: {
-    paths: ['password']
+    paths: ['[0].password'],
+    censor: '[REDACTED]'
   }
 })
 
-export const requestContext = new AsyncLocalStorage<Map<string, PinnoLoger>>()
-
-export const loggerProxy = new Proxy(baseLogger, {
-  get(target, property, receiver) {
-    const storeLogger = requestContext.getStore()?.get('logger') || baseLogger
-    return Reflect.get(storeLogger, property, receiver)
-  }
-})
-
-export const logger: Logger = {
+export const logger: Logger<PinoLogger> = {
+  logger: null as unknown as PinoLogger,
   debug: function (message: string, ...meta: any[]): void {
-    loggerProxy.debug(meta, message)
+    this.logger.debug(meta, message)
   },
   info: function (message: string, ...meta: any[]): void {
-    loggerProxy.info(meta, message)
+    this.logger.info(meta, message)
   },
   warn: function (message: string, ...meta: any[]): void {
-    loggerProxy.warn(meta, message)
+    this.logger.warn(meta, message)
   },
   error: function (message: string, ...meta: any[]): void {
-    loggerProxy.error(meta, message)
+    this.logger.error(meta, message)
+  },
+  build: function (): void {
+    this.logger = baseLogger.child({ requestId: Date.now() })
   }
 }
