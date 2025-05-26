@@ -3,7 +3,7 @@ import { SignInController } from '@/Presentation/Controllers/SignInController/Si
 import { userRepository } from '../../SignUp/Dependencies/UserRepository'
 import { bcryptAdapter, jwtAdapter } from '@/Main/Dependencies/Infrastructure'
 import { z } from 'zod'
-import { ZodAdapter } from '@/Main/Zod/ZodAdapter'
+import { ZodAdapter } from '@/Main/Libs/Zod/ZodAdapter'
 import { SignInParams } from '@/Domain/Authentication/UseCases/SignIn'
 import { Router } from 'express'
 

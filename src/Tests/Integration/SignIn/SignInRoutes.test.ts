@@ -1,5 +1,5 @@
 import { SignUpParams } from '@/Domain/Authentication/UseCases/SignUp'
-import { app } from '@/Main/Express/Express'
+import { app } from '@/Main/Libs/Express/Express'
 import request from 'supertest'
 
 describe('SignIn Routes', () => {

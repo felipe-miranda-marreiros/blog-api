@@ -1,4 +1,4 @@
-import { app } from '@/Main/Express/Express'
+import { app } from '@/Main/Libs/Express/Express'
 import { getCookies } from '@/Tests/Helpers/GetCookies'
 import request from 'supertest'
 

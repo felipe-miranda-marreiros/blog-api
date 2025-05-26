@@ -1,4 +1,4 @@
-import { app } from '@/Main/Express/Express'
+import { app } from '@/Main/Libs/Express/Express'
 import request from 'supertest'
 
 describe('User Routes', () => {

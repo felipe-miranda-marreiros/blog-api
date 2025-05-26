@@ -1,15 +1,15 @@
-import { expressAuthenticationMiddleware } from '@/Main/Express/AuthMiddleware'
-import { expressMiddlewareAdapter } from '@/Main/Express/ExpressMiddlewareAdapter'
 import { Router } from 'express'
 import { authenticationMiddleware } from '../../Users/CurrentUser/CurrentUserRoute'
-import { expressControllerAdapter } from '@/Main/Express/ExpressControllerAdapter'
 import { CreateArticleController } from '@/Presentation/Controllers/CreateArticleController/CreateArticleController'
 import { CreateArticleUseCase } from '@/Application/Modules/Articles/UseCases/CreateArticleUseCase/CreateArticleUseCase'
 import { ArticleSQLRepository } from '@/Infrastructure/Database/Repositories/ArticleSQLRepository'
 import { nodeUserContextAdapter } from '@/Infrastructure/Context/NodeUserContextAdapter'
 import { z } from 'zod'
 import { CreateArticleParams } from '@/Domain/Articles/UseCases/CreateArticle'
-import { ZodAdapter } from '@/Main/Zod/ZodAdapter'
+import { ZodAdapter } from '@/Main/Libs/Zod/ZodAdapter'
+import { expressMiddlewareAdapter } from '@/Main/Libs/Express/ExpressMiddlewareAdapter'
+import { expressAuthenticationMiddleware } from '@/Main/Libs/Express/AuthMiddleware'
+import { expressControllerAdapter } from '@/Main/Libs/Express/ExpressControllerAdapter'
 
 export const createArticleRouter = Router()
 

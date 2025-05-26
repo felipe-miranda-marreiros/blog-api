@@ -1,6 +1,6 @@
 import { NextFunction, Response } from 'express'
-import { RequestWithUser } from '../Types/RequestWithUser'
 import { nodeUserContextAdapter } from '@/Infrastructure/Context/NodeUserContextAdapter'
+import { RequestWithUser } from '@/Main/Types/RequestWithUser'
 
 export function expressAuthenticationMiddleware(
   req: RequestWithUser,

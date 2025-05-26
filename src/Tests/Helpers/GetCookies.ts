@@ -1,7 +1,7 @@
 import { SignUpParams } from '@/Domain/Authentication/UseCases/SignUp'
-import { app } from '@/Main/Express/Express'
 import { agent } from 'supertest'
 import { faker } from '@faker-js/faker'
+import { app } from '@/Main/Libs/Express/Express'
 
 export async function getCookies(): Promise<string[]> {
   const credentials: SignUpParams = {
