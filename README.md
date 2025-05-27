@@ -55,7 +55,7 @@ make docker-install
 
 | Application     | URL                                              |
 | --------------- | ------------------------------------------------ |
-| `App - Node.Js` | [http://localhost:3333](http://localhost:3333)   |
+| `App - Node.Js` | [http://localhost:3333](http://localhost:3000)   |
 | `pgAdmin 4`     | [http://localhost:5050/](http://localhost:5050/) |
 | `PostgreSQL`    | [http://localhost:5432/](http://localhost:5432/) |
 
