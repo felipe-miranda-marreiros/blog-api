@@ -1,0 +1,83 @@
+#!/bin/bash
+
+set -e
+
+echo "Starting Docker setup for the application..."
+
+# Check if Docker is installed
+if ! command -v docker &> /dev/null
+then
+    echo "Docker is not installed. Please install Docker before continuing."
+    exit 1
+fi
+
+# Check if Docker Compose is installed
+if ! command -v docker-compose &> /dev/null
+then
+    echo "Docker Compose is not installed. Please install Docker Compose before continuing."
+    exit 1
+fi
+
+# Remove existing .env.development file if it exists
+if [ -f .env.development ]; then
+  echo "Removing old .env.development..."
+  rm .env.development
+fi
+
+# Remove existing .env.test file if it exists
+if [ -f .env.test ]; then
+  echo "Removing old .env.test..."
+  rm .env.test
+fi
+
+# Create a new .env.development from .env.example
+if [ -f .env.example.dev ]; then
+  echo "Creating new .env.development from .env.example..."
+  cp .env.example.dev .env.development
+else
+  echo ".env.example.dev file not found. Aborting."
+  exit 1
+fi
+
+# Create a new .env.test from .env.example.test
+if [ -f .env.example.test ]; then
+  echo "Creating new .env.test from .env.example.test..."
+  cp .env.example.test .env.test
+else
+  echo ".env.example.test file not found. Aborting."
+  exit 1
+fi
+
+# Stop and remove existing containers (if any)
+echo "Stopping existing containers..."
+docker-compose --env-file .env.development down || true
+
+# Build the app image
+echo "Building app image..."
+docker build -t blog-api .
+
+# Start the services using Docker Compose
+echo "Starting services with Docker Compose..."
+docker compose --env-file .env.development up -d
+
+
+set -a
+source .env.development
+set +a
+
+echo "POSTGRES_CONTAINER_NAME = '${POSTGRES_CONTAINER_NAME}'"
+
+# Aguarda o PostgreSQL estar pronto
+echo "Aguardando o PostgreSQL iniciar..."
+until docker exec ${POSTGRES_CONTAINER_NAME} pg_isready -U "$POSTGRES_USER" > /dev/null 2>&1; do
+  echo "Aguardando banco de dados..."
+  sleep 2
+done
+
+# Executa reset-db dentro do container app
+echo "Executando reset de banco e migrações dentro do container app..."
+docker exec -e NODE_ENV=development ${APP_CONTAINER_NAME} npm run reset:db
+
+echo "Docker setup and migrations concluídos. Containers estão rodando."
+
+echo "Docker setup and services configured successfully"

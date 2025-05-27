@@ -42,9 +42,9 @@ export const testContainers = {
     })
   },
   setupEnvs() {
-    process.env.EXPRESS_PORT = 9000
+    process.env.APP_PORT = 9000
     process.env.JWT_SECRET = 'JWT_TEST_SECRECT'
-    process.env.NODE_ENV = 'development'
+    process.env.NODE_ENV = 'test'
   },
   async initAll() {
     await this.initSQLContainer()
