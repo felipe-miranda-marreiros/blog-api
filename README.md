@@ -45,7 +45,7 @@ These are the requirements to run this project:
 
 ## Setup
 
-Follow the above commands to setup Docker.
+Follow the below commands to setup Docker.
 
 ```sh
 make docker-install
