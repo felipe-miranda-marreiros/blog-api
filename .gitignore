@@ -6,3 +6,4 @@ docs/openapi.json
 openapi.json
 !.env.example.dev
 !.env.example.test
+!.env.example.local

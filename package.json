@@ -9,6 +9,7 @@
     "start": "node build/Main/index.js",
     "build": "tsup src --out-dir build",
     "docker:dev": "docker compose --env-file .env.development up -d",
+    "reset:db": "tsx scripts/reset-db.ts",
     "test": "jest --passWithNoTests --noStackTrace --runInBand --detectOpenHandles",
     "test:integration": "npm test -- -c jest.integration.config.ts",
     "test:unit": "npm test -- -c jest.unit.config.ts",
