@@ -67,17 +67,15 @@ set +a
 
 echo "POSTGRES_CONTAINER_NAME = '${POSTGRES_CONTAINER_NAME}'"
 
-# Aguarda o PostgreSQL estar pronto
-echo "Aguardando o PostgreSQL iniciar..."
+# Checking if PostgreSQL is up
+echo "Waiting for PostgreSQL..."
 until docker exec ${POSTGRES_CONTAINER_NAME} pg_isready -U "$POSTGRES_USER" > /dev/null 2>&1; do
-  echo "Aguardando banco de dados..."
+  echo "Waiting for database..."
   sleep 2
 done
 
-# Executa reset-db dentro do container app
-echo "Executando reset de banco e migrações dentro do container app..."
+# Database resets
+echo "Resetting database and running migrations"
 docker exec -e NODE_ENV=development ${APP_CONTAINER_NAME} npm run reset:db
-
-echo "Docker setup and migrations concluídos. Containers estão rodando."
 
 echo "Docker setup and services configured successfully"

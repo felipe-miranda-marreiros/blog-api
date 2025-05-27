@@ -13,7 +13,7 @@ const envSchema = z.object({
 
   // App
   APP_CONTAINER_NAME: z.string().nonempty(),
-  APP_ENV: z.enum(['development', 'production', 'test']),
+  APP_ENV: z.enum(['development', 'production', 'test', 'local']),
   APP_PORT: z.coerce.number().int().min(1).max(65535),
 
   // JWT

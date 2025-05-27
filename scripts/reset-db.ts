@@ -13,16 +13,14 @@ async function resetDatabase() {
 
   console.log('>> Dropping tables...')
   await db.execute(`
-  -- Remove o tipo ENUM, se existir
+  DROP TABLE IF EXISTS usernames, emails, articles, users CASCADE;
+
   DO $$
   BEGIN
     IF EXISTS (SELECT 1 FROM pg_type WHERE typname = 'status') THEN
-      DROP TYPE status;
+      DROP TYPE status CASCADE;
     END IF;
   END$$;
-
-  -- Remove tabelas (e dependências)
-  DROP TABLE IF EXISTS usernames, emails, articles, users CASCADE;
 `)
 
   console.log('>> Running migrations...')
