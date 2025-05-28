@@ -1,5 +1,5 @@
 import { app } from '@/Main/Libs/Express/Express'
-import { getCookies } from '@/Tests/Helpers/GetCookies'
+import { getCookies } from '@/Tests/Integration/Helpers/GetCookies'
 import request from 'supertest'
 
 describe('Create Article Route', () => {
