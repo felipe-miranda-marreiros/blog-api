@@ -24,13 +24,8 @@ const createUserSchema = z.object({
 }) satisfies z.Schema<SignUpParams>
 
 const createUserValidation = new ZodAdapter(createUserSchema)
-const signUpController = new SignUpController(
+
+export const signUpController = new SignUpController(
   createUserUseCase,
   createUserValidation
 )
-
-signUpRoutes.post('/api/auth/sign-up', async (req, res) => {
-  const response = await signUpController.handle({ body: req.body })
-  res.cookie('jwt', response.body?.access_token)
-  res.status(response.status_code).json({})
-})

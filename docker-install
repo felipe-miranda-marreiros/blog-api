@@ -60,7 +60,6 @@ docker build -t blog-api .
 echo "Starting services with Docker Compose..."
 docker compose --env-file .env.development up -d
 
-
 set -a
 source .env.development
 set +a
@@ -77,5 +76,8 @@ done
 # Database resets
 echo "Resetting database and running migrations"
 docker exec -e NODE_ENV=development ${APP_CONTAINER_NAME} npm run reset:db
+
+echo "Pushing migration files..."
+docker exec app npx drizzle-kit push
 
 echo "Docker setup and services configured successfully"

@@ -1,6 +1,6 @@
 import { UserRepository } from '@/Application/Contracts/Repositories/UserRepository'
 import { db } from '../Drizzle/DrizzleClient'
-import { emails, usernames, users } from '../Schemas/Schemas'
+import { emails_table, usernames_table, users_table } from '../Schemas/Schemas'
 import { getISOFormatDateQuery } from '../Helpers/Helpers'
 import { eq } from 'drizzle-orm'
 import { SignUpParams } from '@/Domain/Authentication/UseCases/SignUp'
@@ -10,44 +10,47 @@ export class UserSQLRepository implements UserRepository {
   async getUserByEmail(email: string): Promise<User | undefined> {
     const result = await db
       .select()
-      .from(emails)
-      .where(eq(emails.email, email))
-      .leftJoin(users, eq(users.email_id, emails.id))
+      .from(emails_table)
+      .where(eq(emails_table.email, email))
+      .leftJoin(users_table, eq(users_table.email_id, emails_table.id))
 
-    if (result[0]?.users) {
+    if (result[0]?.users_table) {
       return {
-        ...result[0]?.users,
-        created_at: result[0].users.created_at.toISOString(),
-        updated_at: result[0].users.updated_at.toISOString()
+        ...result[0]?.users_table,
+        created_at: result[0].users_table.created_at.toISOString(),
+        updated_at: result[0].users_table.updated_at.toISOString()
       }
     }
   }
 
   async isEmailInUse(email: string): Promise<boolean> {
-    const result = await db.select().from(emails).where(eq(emails.email, email))
+    const result = await db
+      .select()
+      .from(emails_table)
+      .where(eq(emails_table.email, email))
     return result.length > 0
   }
 
   async isUsernameInUse(username: string): Promise<boolean> {
     const result = await db
       .select()
-      .from(usernames)
-      .where(eq(usernames.username, username))
+      .from(usernames_table)
+      .where(eq(usernames_table.username, username))
     return result.length > 0
   }
 
   async createUser(params: SignUpParams): Promise<LoggedInUser> {
     const result = await db.transaction(async (tx) => {
       const usernameTransaction = await tx
-        .insert(usernames)
+        .insert(usernames_table)
         .values({ username: params.username })
-        .returning({ username_id: usernames.id })
+        .returning({ username_id: usernames_table.id })
       const emailTransaction = await tx
-        .insert(emails)
+        .insert(emails_table)
         .values({ email: params.email })
-        .returning({ email_id: emails.id })
+        .returning({ email_id: emails_table.id })
       return await tx
-        .insert(users)
+        .insert(users_table)
         .values({
           password: params.password,
           last_name: params.last_name,
@@ -56,13 +59,13 @@ export class UserSQLRepository implements UserRepository {
           email_id: emailTransaction[0].email_id
         })
         .returning({
-          id: users.id,
-          last_name: users.last_name,
-          first_name: users.first_name,
-          username_id: users.username_id,
-          email_id: users.email_id,
-          created_at: getISOFormatDateQuery(users.created_at),
-          updated_at: getISOFormatDateQuery(users.updated_at)
+          id: users_table.id,
+          last_name: users_table.last_name,
+          first_name: users_table.first_name,
+          username_id: users_table.username_id,
+          email_id: users_table.email_id,
+          created_at: getISOFormatDateQuery(users_table.created_at),
+          updated_at: getISOFormatDateQuery(users_table.updated_at)
         })
     })
     return result[0]

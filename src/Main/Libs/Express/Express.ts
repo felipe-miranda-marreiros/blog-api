@@ -1,20 +1,27 @@
 import express from 'express'
 import { errorHandlerMiddleware } from './ErrorHandlerMiddleware'
 import cookieParser from 'cookie-parser'
-import { signUpRoutes } from '@/Main/Routes/Authentication/SignUp/SignUpRoute/SignUpRoute'
-import { signInRouter } from '@/Main/Routes/Authentication/SignIn/SignInRoute/SignInRoute'
-import { userRoutes } from '@/Main/Routes/Users/CurrentUser/CurrentUserRoute'
-import { createArticleRouter } from '@/Main/Routes/Articles/CreateArticle/CreateArticleRoute'
-import { updateArticleRouter } from '@/Main/Routes/Articles/UpdateArticle/UpdateArticleRoute'
+import { authenticationMiddleware } from '@/Main/Routes/Users/Routes/CurrentUserRoute'
 import { expressRequestContextMiddleware } from './ExpressRequestContextMiddleware'
+import { expressMiddlewareAdapter } from './ExpressMiddlewareAdapter'
+import { expressAuthenticationMiddleware } from './AuthMiddleware'
+import { authenticationRouter } from '@/Main/Routes/Authentication'
+import { userRouter } from '@/Main/Routes/Users'
+import { articleRouter } from '@/Main/Routes/Articles'
 
 export const app = express()
 app.use(expressRequestContextMiddleware)
 app.use(cookieParser())
 app.use(express.json())
-app.use(signUpRoutes)
-app.use(signInRouter)
-app.use(userRoutes)
-app.use(createArticleRouter)
-app.use(updateArticleRouter)
+
+// Public Routes
+app.use(authenticationRouter)
+
+// Protected Routes
+app.use(expressMiddlewareAdapter(authenticationMiddleware))
+app.use(expressAuthenticationMiddleware)
+app.use(userRouter)
+app.use(articleRouter)
+
+// Global Error Handler
 app.use(errorHandlerMiddleware)

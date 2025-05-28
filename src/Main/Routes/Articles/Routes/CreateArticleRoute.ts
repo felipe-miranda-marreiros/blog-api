@@ -1,5 +1,3 @@
-import { Router } from 'express'
-import { authenticationMiddleware } from '../../Users/CurrentUser/CurrentUserRoute'
 import { CreateArticleController } from '@/Presentation/Controllers/CreateArticleController/CreateArticleController'
 import { CreateArticleUseCase } from '@/Application/Modules/Articles/UseCases/CreateArticleUseCase/CreateArticleUseCase'
 import { ArticleSQLRepository } from '@/Infrastructure/Database/Repositories/ArticleSQLRepository'
@@ -7,11 +5,6 @@ import { nodeUserContextAdapter } from '@/Infrastructure/Context/NodeUserContext
 import { z } from 'zod'
 import { CreateArticleParams } from '@/Domain/Articles/UseCases/CreateArticle'
 import { ZodAdapter } from '@/Main/Libs/Zod/ZodAdapter'
-import { expressMiddlewareAdapter } from '@/Main/Libs/Express/ExpressMiddlewareAdapter'
-import { expressAuthenticationMiddleware } from '@/Main/Libs/Express/AuthMiddleware'
-import { expressControllerAdapter } from '@/Main/Libs/Express/ExpressControllerAdapter'
-
-export const createArticleRouter = Router()
 
 const articleRepository = new ArticleSQLRepository()
 const createArticleUseCase = new CreateArticleUseCase(
@@ -23,15 +16,7 @@ const createArticleSchema = z.object({
   body: z.string().nonempty()
 }) satisfies z.Schema<CreateArticleParams>
 
-const createArticleController = new CreateArticleController(
+export const createArticleController = new CreateArticleController(
   createArticleUseCase,
   new ZodAdapter(createArticleSchema)
-)
-
-createArticleRouter.use(expressMiddlewareAdapter(authenticationMiddleware))
-createArticleRouter.use(expressAuthenticationMiddleware)
-
-createArticleRouter.post(
-  '/api/articles',
-  expressControllerAdapter(createArticleController)
 )

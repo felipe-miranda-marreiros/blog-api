@@ -16,7 +16,7 @@ const baseSchema = {
     .notNull()
 }
 
-export const users = pgTable('users', {
+export const users_table = pgTable('users_table', {
   ...baseSchema,
   email_id: integer().notNull(),
   username_id: integer().notNull(),
@@ -27,7 +27,7 @@ export const users = pgTable('users', {
 
 export const articleStatusEnum = pgEnum('status', ['ACTIVE', 'ARCHIVED'])
 
-export const articles = pgTable('articles', {
+export const articles_table = pgTable('articles_table', {
   ...baseSchema,
   title: varchar({ length: 255 }).notNull(),
   body: text().notNull(),
@@ -35,12 +35,12 @@ export const articles = pgTable('articles', {
   user_id: integer().notNull()
 })
 
-export const usernames = pgTable('usernames', {
+export const usernames_table = pgTable('usernames_table', {
   ...baseSchema,
   username: varchar({ length: 255 }).notNull().unique()
 })
 
-export const emails = pgTable('emails', {
+export const emails_table = pgTable('emails_table', {
   ...baseSchema,
   email: varchar({ length: 255 }).notNull().unique()
 })

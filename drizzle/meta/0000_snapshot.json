@@ -1,11 +1,11 @@
 {
-  "id": "2d1c870f-b515-490c-8710-e6cde28a6222",
+  "id": "3abccc28-3a48-4e50-9d52-8124755664e3",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
-    "public.emails": {
-      "name": "emails",
+    "public.articles_table": {
+      "name": "articles_table",
       "schema": "",
       "columns": {
         "id": {
@@ -15,7 +15,76 @@
           "notNull": true,
           "identity": {
             "type": "always",
-            "name": "emails_id_seq",
+            "name": "articles_table_id_seq",
+            "schema": "public",
+            "increment": "1",
+            "startWith": "1",
+            "minValue": "1",
+            "maxValue": "2147483647",
+            "cache": "1",
+            "cycle": false
+          }
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "title": {
+          "name": "title",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "body": {
+          "name": "body",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "status": {
+          "name": "status",
+          "type": "status",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.emails_table": {
+      "name": "emails_table",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "identity": {
+            "type": "always",
+            "name": "emails_table_id_seq",
             "schema": "public",
             "increment": "1",
             "startWith": "1",
@@ -50,8 +119,8 @@
       "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
-        "emails_email_unique": {
-          "name": "emails_email_unique",
+        "emails_table_email_unique": {
+          "name": "emails_table_email_unique",
           "nullsNotDistinct": false,
           "columns": [
             "email"
@@ -62,8 +131,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.usernames": {
-      "name": "usernames",
+    "public.usernames_table": {
+      "name": "usernames_table",
       "schema": "",
       "columns": {
         "id": {
@@ -73,7 +142,7 @@
           "notNull": true,
           "identity": {
             "type": "always",
-            "name": "usernames_id_seq",
+            "name": "usernames_table_id_seq",
             "schema": "public",
             "increment": "1",
             "startWith": "1",
@@ -108,8 +177,8 @@
       "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
-        "usernames_username_unique": {
-          "name": "usernames_username_unique",
+        "usernames_table_username_unique": {
+          "name": "usernames_table_username_unique",
           "nullsNotDistinct": false,
           "columns": [
             "username"
@@ -120,8 +189,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.users": {
-      "name": "users",
+    "public.users_table": {
+      "name": "users_table",
       "schema": "",
       "columns": {
         "id": {
@@ -131,7 +200,7 @@
           "notNull": true,
           "identity": {
             "type": "always",
-            "name": "users_id_seq",
+            "name": "users_table_id_seq",
             "schema": "public",
             "increment": "1",
             "startWith": "1",
@@ -195,7 +264,16 @@
       "isRLSEnabled": false
     }
   },
-  "enums": {},
+  "enums": {
+    "public.status": {
+      "name": "status",
+      "schema": "public",
+      "values": [
+        "ACTIVE",
+        "ARCHIVED"
+      ]
+    }
+  },
   "schemas": {},
   "sequences": {},
   "roles": {},

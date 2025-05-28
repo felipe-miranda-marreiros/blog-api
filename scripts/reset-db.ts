@@ -1,6 +1,5 @@
 import { drizzle } from 'drizzle-orm/node-postgres'
 import { Client } from 'pg'
-import { migrate } from 'drizzle-orm/node-postgres/migrator'
 
 const client = new Client({
   connectionString: process.env.DATABASE_URL
@@ -13,7 +12,7 @@ async function resetDatabase() {
 
   console.log('>> Dropping tables...')
   await db.execute(`
-  DROP TABLE IF EXISTS usernames, emails, articles, users CASCADE;
+  DROP TABLE IF EXISTS usernames_table, emails_table, articles_table, users_table CASCADE;
 
   DO $$
   BEGIN
@@ -23,11 +22,8 @@ async function resetDatabase() {
   END$$;
 `)
 
-  console.log('>> Running migrations...')
-  await migrate(db, { migrationsFolder: 'drizzle' })
-
   await client.end()
-  console.log('Database reset and migrated')
+  console.log('Database reset')
 }
 
 resetDatabase().catch((err) => {

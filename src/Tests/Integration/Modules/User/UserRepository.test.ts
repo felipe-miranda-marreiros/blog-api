@@ -1,7 +1,10 @@
 import { SignUpParams } from '@/Domain/Authentication/UseCases/SignUp'
 import { db } from '@/Infrastructure/Database/Drizzle/DrizzleClient'
 import { UserSQLRepository } from '@/Infrastructure/Database/Repositories/UserSQLRepository'
-import { emails, usernames } from '@/Infrastructure/Database/Schemas/Schemas'
+import {
+  emails_table,
+  usernames_table
+} from '@/Infrastructure/Database/Schemas/Schemas'
 
 describe('User Repository', () => {
   let userSQLRepository = null as unknown as UserSQLRepository
@@ -31,9 +34,9 @@ describe('User Repository', () => {
   })
   it('Should return true if isEmailInUse does find an email equals to params', async () => {
     const usedEmail = await db
-      .insert(emails)
+      .insert(emails_table)
       .values({ email: 'used_email@gmail.com' })
-      .returning({ usedEmail: emails.email })
+      .returning({ usedEmail: emails_table.email })
     const isEmailInUse = await userSQLRepository.isEmailInUse(
       usedEmail[0].usedEmail
     )
@@ -46,9 +49,9 @@ describe('User Repository', () => {
   })
   it('Should return true if isUsernameInUse does find an username equals to params', async () => {
     const usedUsername = await db
-      .insert(usernames)
+      .insert(usernames_table)
       .values({ username: 'used_username' })
-      .returning({ usedUsername: usernames.username })
+      .returning({ usedUsername: usernames_table.username })
     const isUsernameInUse = await userSQLRepository.isUsernameInUse(
       usedUsername[0].usedUsername
     )
