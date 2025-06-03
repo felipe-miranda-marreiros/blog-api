@@ -48,6 +48,21 @@ else
   exit 1
 fi
 
+# Create a new .env.local from .env.example.local
+if [ -f .env.example.local ]; then
+  echo "Creating new .env.local from .env.example.local..."
+  cp .env.example.local .env.local
+else
+  echo ".env.example.local file not found. Aborting."
+  exit 1
+fi
+
+echo "Installing dependencies..."
+npm install
+
+echo "Generating docs..."
+npm run docs
+
 # Stop and remove existing containers (if any)
 echo "Stopping existing containers..."
 docker-compose --env-file .env.development down || true

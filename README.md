@@ -25,10 +25,10 @@
       - [Error Handling](#error-handling)
       - [Validation](#validation)
   - [Known Issues](#known-issues)
-      - [1 - DDD:](#1---ddd)
-      - [2 - Authentication and Authorization:](#2---authentication-and-authorization)
-      - [3 - Cohesion and Layered Architecture](#3---cohesion-and-layered-architecture)
-      - [4 - Dependency Injection and Dependency Injection Container](#4---dependency-injection-and-dependency-injection-container)
+    - [1 - DDD:](#1---ddd)
+    - [2 - Authentication and Authorization:](#2---authentication-and-authorization)
+    - [3 - Cohesion and Layered Architecture](#3---cohesion-and-layered-architecture)
+    - [4 - Dependency Injection and Dependency Injection Container](#4---dependency-injection-and-dependency-injection-container)
 
 ## About
 
@@ -53,12 +53,12 @@ make docker-install
 
 ### Applications Running
 
-| Application     | URL                                              |
-| --------------- | ------------------------------------------------ |
-| `App - Node.Js` | [http://localhost:3333](http://localhost:3000/)  |
-| `pgAdmin 4`     | [http://localhost:5050/](http://localhost:5050/) |
-| `PostgreSQL`    | [http://localhost:5432/](http://localhost:5432/) |
-| `Swagger Docs`  | [http://localhost:5432/](http://localhost:8081/) |
+| Application     | URL                                                       |
+| --------------- | --------------------------------------------------------- |
+| `App - Node.Js` | [http://localhost:3000/](http://localhost:3000/)          |
+| `pgAdmin 4`     | [http://localhost:5050/](http://localhost:5050/)          |
+| `PostgreSQL`    | [http://localhost:5432/](http://localhost:5432/)          |
+| `Swagger Docs`  | [http://localhost:3000/docs/](http://localhost:3000/docs) |
 
 ## Architecture
 
@@ -247,7 +247,6 @@ Verifying user identity and access control in many parts of the system.
 This method requires the password to be hashed first before creating a user:
 
 ![Screenshot 2025-05-26 at 17 37 36](https://github.com/user-attachments/assets/6cc32c45-1b93-4f7d-9d7b-57f2654283d1)
-
 
 - Authorization Method: JWT (`jsonwebtoken`) with `Cookie based` transport via HTTPS only.
 

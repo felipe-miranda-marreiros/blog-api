@@ -8,13 +8,16 @@ import { expressAuthenticationMiddleware } from './AuthMiddleware'
 import { authenticationRouter } from '@/Main/Routes/Authentication'
 import { userRouter } from '@/Main/Routes/Users'
 import { articleRouter } from '@/Main/Routes/Articles'
+import { swaggerRouter } from '@/Main/Routes/Swagger/SwggerRouter'
 
 export const app = express()
+
 app.use(expressRequestContextMiddleware)
 app.use(cookieParser())
 app.use(express.json())
 
 // Public Routes
+app.use(swaggerRouter)
 app.use(authenticationRouter)
 
 // Protected Routes

@@ -7,7 +7,7 @@
     "prepare": "husky",
     "start:dev": "tsx --env-file=.env.development --watch src/Main/index.ts",
     "start:local": "tsx --env-file=.env.local --watch src/Main/index.ts",
-    "docs": "tspec generate --configPath tspec.config.json",
+    "docs": "tspec generate --outputPath ./src/Main/Routes/Swagger/openapi.json",
     "start": "node build/Main/index.js",
     "build": "tsup src --out-dir build",
     "docker:dev": "docker compose --env-file .env.development up -d",
