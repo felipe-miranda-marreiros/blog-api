@@ -1,5 +1,5 @@
 import { UserContext } from '@/Application/Contracts/Context/UserContext'
-import { ArticleRepository } from '@/Application/Contracts/Repositories/ArticleRepository/ArticleRepository'
+import { ArticleRepository } from '@/Application/Contracts/Repositories/ArticleRepository'
 import {
   CreateArticle,
   CreateArticleParams,

@@ -1,9 +1,9 @@
 import { UserContext } from '@/Application/Contracts/Context/UserContext'
 import {
   ArticleRepository,
-  UpdateArticleParams
-} from '@/Application/Contracts/Repositories/ArticleRepository/ArticleRepository'
-import { CreateArticleUseCase } from '@/Application/Modules/Articles/UseCases/CreateArticleUseCase/CreateArticleUseCase'
+  ArticlePersistence
+} from '@/Application/Contracts/Repositories/ArticleRepository'
+import { CreateArticleUseCase } from '@/Application/Modules/Articles/UseCases/CreateArticleUseCase'
 import { Article } from '@/Domain/Articles/Models/Article'
 import { CreateArticleParams } from '@/Domain/Articles/UseCases/CreateArticle'
 import { LoggedInUser } from '@/Domain/Users/Models/User'
@@ -48,7 +48,7 @@ const article: Article = {
 
 function createArticleRepository() {
   class ArticleRepositoryStub implements ArticleRepository {
-    updateArticle(params: UpdateArticleParams): Promise<Article> {
+    updateArticle(params: ArticlePersistence.UpdateArticle): Promise<Article> {
       throw new Error('Method not implemented.')
     }
     getArticleById(id: number): Promise<Article | undefined> {

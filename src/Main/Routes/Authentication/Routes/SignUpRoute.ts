@@ -1,6 +1,6 @@
 import { Router } from 'express'
 import { SignUpController } from '@/Presentation/Controllers/SignUpController/SignUpController'
-import { SignUpUseCase } from '@/Application/Modules/Authentication/UseCases/SignUpUseCase/SignUpUseCase'
+import { SignUpUseCase } from '@/Application/Modules/Authentication/UseCases/SignUpUseCase'
 import { userRepository } from '../Dependencies/UserRepository'
 import { ZodAdapter } from '@/Main/Libs/Zod/ZodAdapter'
 import { z } from 'zod'

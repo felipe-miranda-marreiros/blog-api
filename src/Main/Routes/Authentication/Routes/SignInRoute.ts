@@ -1,4 +1,4 @@
-import { SignInUseCase } from '@/Application/Modules/Authentication/UseCases/SignInUseCase/SignInUseCase'
+import { SignInUseCase } from '@/Application/Modules/Authentication/UseCases/SignInUseCase'
 import { SignInController } from '@/Presentation/Controllers/SignInController/SignInController'
 import { bcryptAdapter, jwtAdapter } from '@/Main/Dependencies/Infrastructure'
 import { z } from 'zod'

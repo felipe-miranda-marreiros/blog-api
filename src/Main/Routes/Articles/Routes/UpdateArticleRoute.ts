@@ -3,7 +3,7 @@ import { nodeUserContextAdapter } from '@/Infrastructure/Context/NodeUserContext
 import { z } from 'zod'
 import { ZodAdapter } from '@/Main/Libs/Zod/ZodAdapter'
 import { UpdateArticleController } from '@/Presentation/Controllers/UpdateArticleController/UpdateArticleController'
-import { UpdateArticleUseCase } from '@/Application/Modules/Articles/UseCases/UpdateArticleUseCase/UpdateArticleUseCase'
+import { UpdateArticleUseCase } from '@/Application/Modules/Articles/UseCases/UpdateArticleUseCase'
 
 const articleRepository = new ArticleSQLRepository()
 const updateArticleUseCase = new UpdateArticleUseCase(

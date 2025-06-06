@@ -1,7 +1,7 @@
 import { UserContext } from '@/Application/Contracts/Context/UserContext'
 import { ConflictError } from '@/Application/Contracts/Errors/ConflictError'
 import { NotFoundError } from '@/Application/Contracts/Errors/NotFoundError'
-import { ArticleRepository } from '@/Application/Contracts/Repositories/ArticleRepository/ArticleRepository'
+import { ArticleRepository } from '@/Application/Contracts/Repositories/ArticleRepository'
 import {
   UpdateArticle,
   UpdateArticleParams,

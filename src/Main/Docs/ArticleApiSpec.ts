@@ -3,10 +3,12 @@ import {
   CreateArticleResponse
 } from '@/Domain/Articles/UseCases/CreateArticle'
 import {
-  UpdateArticleParams,
+  UpdateArticleParams as DomainUpdateArticleParams,
   UpdateArticleResponse
 } from '@/Domain/Articles/UseCases/UpdateArticle'
 import { Tspec } from 'tspec'
+
+type UpdateArticleParams = Omit<DomainUpdateArticleParams, 'id'>
 
 export type ArticleApiSpec = Tspec.DefineApiSpec<{
   basePath: '/api/articles'
@@ -23,7 +25,7 @@ export type ArticleApiSpec = Tspec.DefineApiSpec<{
       put: {
         summary: 'Update an existing article'
         path: { id: number }
-        body: Omit<UpdateArticleParams, 'id'>
+        body: UpdateArticleParams
         responses: { 200: UpdateArticleResponse }
       }
     }

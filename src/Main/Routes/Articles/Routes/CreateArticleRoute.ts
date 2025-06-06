@@ -1,5 +1,5 @@
 import { CreateArticleController } from '@/Presentation/Controllers/CreateArticleController/CreateArticleController'
-import { CreateArticleUseCase } from '@/Application/Modules/Articles/UseCases/CreateArticleUseCase/CreateArticleUseCase'
+import { CreateArticleUseCase } from '@/Application/Modules/Articles/UseCases/CreateArticleUseCase'
 import { ArticleSQLRepository } from '@/Infrastructure/Database/Repositories/ArticleSQLRepository'
 import { nodeUserContextAdapter } from '@/Infrastructure/Context/NodeUserContextAdapter'
 import { z } from 'zod'

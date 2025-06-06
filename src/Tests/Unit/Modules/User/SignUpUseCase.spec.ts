@@ -3,7 +3,7 @@ import { HashComparer } from '@/Application/Contracts/Criptography/HashComparer'
 import { Hasher } from '@/Application/Contracts/Criptography/Hasher'
 import { ConflictError } from '@/Application/Contracts/Errors/ConflictError'
 import { UserRepository } from '@/Application/Contracts/Repositories/UserRepository'
-import { SignUpUseCase } from '@/Application/Modules/Authentication/UseCases/SignUpUseCase/SignUpUseCase'
+import { SignUpUseCase } from '@/Application/Modules/Authentication/UseCases/SignUpUseCase'
 import { createEncrypterStub } from '@/Tests/Mocks/Criptography/EncrypterMock'
 import { createHasherStub } from '@/Tests/Mocks/Criptography/HasherMock'
 import {

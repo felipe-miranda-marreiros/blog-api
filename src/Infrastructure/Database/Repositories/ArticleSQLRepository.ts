@@ -1,8 +1,7 @@
 import {
   ArticleRepository,
-  CreateArticleParams,
-  UpdateArticleParams
-} from '@/Application/Contracts/Repositories/ArticleRepository/ArticleRepository'
+  ArticlePersistence
+} from '@/Application/Contracts/Repositories/ArticleRepository'
 import { Article } from '@/Domain/Articles/Models/Article'
 import { db } from '../Drizzle/DrizzleClient'
 import { articles_table } from '../Schemas/Schemas'
@@ -10,7 +9,9 @@ import { getISOFormatDateQuery } from '../Helpers/Helpers'
 import { eq } from 'drizzle-orm'
 
 export class ArticleSQLRepository implements ArticleRepository {
-  async updateArticle(params: UpdateArticleParams): Promise<Article> {
+  async updateArticle(
+    params: ArticlePersistence.UpdateArticle
+  ): Promise<Article> {
     const article = await db
       .update(articles_table)
       .set({
@@ -44,7 +45,9 @@ export class ArticleSQLRepository implements ArticleRepository {
       : undefined
   }
 
-  async createArticle(params: CreateArticleParams): Promise<Article> {
+  async createArticle(
+    params: ArticlePersistence.CreateArticle
+  ): Promise<Article> {
     const article = await db
       .insert(articles_table)
       .values({
