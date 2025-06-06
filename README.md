@@ -25,10 +25,10 @@
       - [Error Handling](#error-handling)
       - [Validation](#validation)
   - [Known Issues](#known-issues)
-    - [1 - DDD:](#1---ddd)
-    - [2 - Authentication and Authorization:](#2---authentication-and-authorization)
-    - [3 - Cohesion and Layered Architecture](#3---cohesion-and-layered-architecture)
-    - [4 - Dependency Injection and Dependency Injection Container](#4---dependency-injection-and-dependency-injection-container)
+      - [1 - DDD:](#1---ddd)
+      - [2 - Authentication and Authorization:](#2---authentication-and-authorization)
+      - [3 - Cohesion and Layered Architecture](#3---cohesion-and-layered-architecture)
+      - [4 - Dependency Injection and Dependency Injection Container](#4---dependency-injection-and-dependency-injection-container)
 
 ## About
 
@@ -45,10 +45,20 @@ These are the requirements to run this project:
 
 ## Setup
 
-Follow the below commands to setup Docker.
+Follow the below command to setup Docker.
 
 ```sh
 make docker-install
+```
+
+The command above will:
+
+```sh
+## Setup envs (local, dev, test)
+## Install project dependencies
+## Generate Swagger Docs
+## Build project containers on Docker
+## Run migrations with DrizzleORM
 ```
 
 ### Applications Running
