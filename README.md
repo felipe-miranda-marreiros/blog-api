@@ -1,8 +1,3 @@
-# blog-api
-
-# Summary
-
-- [blog-api - In Progress](#blog-api---in-progress)
 - [Summary](#summary)
   - [About](#about)
   - [Requirements](#requirements)
