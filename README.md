@@ -1,4 +1,4 @@
-# blog-api - In Progress
+# blog-api
 
 # Summary
 
